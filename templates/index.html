@@ -2,7 +2,7 @@
 <head>
 	<title>New York Airbnb Listings DASHBOARD</title>
 	<script src='https://d3js.org/d3.v4.min.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>t>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style type="text/css">
 		.line {
@@ -10,7 +10,35 @@
 		  stroke: steelblue;
 		  stroke-width: 2px;
 		}
+		.background {
+		fill: #fff;
+		pointer-events: all;
+		}
+
+		.map-layer {
+		fill: #fff;
+		stroke: #aaa;
+		}
+
+		.effect-layer{
+		pointer-events:none;
+		}
+
+		text{
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-weight: 300;
+		}
+
+		text.big-text{
+		font-size: 30px;
+		font-weight: 400;
+		}
+
+		.effect-layer text, text.dummy-text{
+		font-size: 12px;
+		}
 	</style>
+	
 </head> 
 <body>
     
