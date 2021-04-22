@@ -16,7 +16,7 @@ function drawNYCMap(){
     .scale(45000)
     // Center the Map in Colombia
     .center([-73.935242, 40.730610])
-    .translate([width / 1.8, height / 2.5]);
+    .translate([width / 1.2, height / 2.7]);
 
   var path = d3.geoPath()
     .projection(projection);
@@ -26,7 +26,7 @@ function drawNYCMap(){
     .append('svg')
     .attr('width', '100%')
     .attr('height', '100%')
-    .style( "background-color", "#fff");
+    .style( "background-color", "#252322");
     //.attr("viewbox", '0 0 100% 100%');
 
   // Add background

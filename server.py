@@ -10,9 +10,11 @@ from sklearn.decomposition import PCA
 import numpy as np
 from flask import jsonify
 
+
 app = Flask(__name__)
 
-data2021 = pd.read_csv("./data/listings_2019.csv")
+data2021 = pd.read_csv("E:/SBU/Visualization/final-project/nycAirbnb/Data/listings_2019.csv")
+
 print(data2021.columns)
 # borough = data2021['neighbourhood_group_cleansed'].tolist()
 # print(data2021['neighbourhood_group_cleansed'].unique())
@@ -47,6 +49,43 @@ def sendLine():
         data[i] = mylist.count(i)
     print(data)
     return data
+
+
+@app.route("/scatterplot",methods= ['POST','GET'])
+def sendScatterPlotData():
+    scatterData=[]
+    dataIds = data2021['id']
+    dataPrice = data2021['price'].str.replace('$','').str.replace(',','')
+    #dataPrice = data2021['price'].str.replace(',','')
+    dataRating = data2021['review_scores_rating']
+    for i in range(len(dataIds)):
+        tempDict = {'id':int(dataIds[i]), 'price':float(dataPrice[i]), 'rating': int(dataRating[i])}
+        scatterData.append(tempDict)
+        #scatterData.append([dataIds[i], dataPrice[i], dataRating[i]])
+        # scatterData[str(dataIds[i])] = {}
+        # scatterData[str(dataIds[i])]['price'] = dataPrice[i] 
+        # scatterData[str(dataIds[i])]['rating'] = dataRating[i]
+    #print("in scatterplot")
+    #print(data)
+    #print(type(dataPrice))
+    #data=  [{'id': 1,'x': 45, 'y': 50}, {'id': 2,'x': 200, 'y': 200}, {'id': 3,'x': 300, 'y': 300}
+    return jsonify(scatterData)
+
+#def sendScatterPlotData():
+#    scatterData={}
+    # dataIds = data2021['id']
+    # dataPrice = data2021['price'].str.replace('$','')
+    # dataRating = data2021['review_scores_rating']
+    # #scatterData["price"] = dataPrice.str.replace(',','').astype(float).to_list()
+    # #scatterData["ratings"] = dataRating.to_list()
+    # for i in range(len(dataIds)):
+    #     scatterData[str(dataIds[i])] = {}
+    #     scatterData[str(dataIds[i])]['price'] = dataPrice[i] 
+    #     scatterData[str(dataIds[i])]['rating'] = dataRating[i]
+    # #print("in scatterplot")
+    # #print(data)
+    # #print(type(dataPrice))
+    # return jsonify(scatterData)
 
 if __name__ == "__main__":
     app.run(debug=True)

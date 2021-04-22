@@ -2,8 +2,9 @@
 <head>
 	<title>New York Airbnb Listings DASHBOARD</title>
 	<script src='https://d3js.org/d3.v4.min.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>t>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 	<style type="text/css">
 		.line {
 		  fill: none;
@@ -11,7 +12,7 @@
 		  stroke-width: 2px;
 		}
 		.background {
-		fill: #fff;
+		fill: #252322;
 		pointer-events: all;
 		}
 
@@ -37,13 +38,26 @@
 		.effect-layer text, text.dummy-text{
 		font-size: 12px;
 		}
+
+		.brushed {
+            fill: #ff3399;
+            stroke: #8e1b54;
+            opacity: 1.0;
+        }
+
+        .non_brushed {
+            fill: #404040;
+            opacity: 0.5;
+        }
 	</style>
 	
 </head> 
 <body>
     
-    <h1 align="center"> NYC AIRBNB LISTINGS</h1>
-
+    <!-- <h1 align="center"> NYC AIRBNB LISTINGS</h1> -->
+	 <br>
+	<h2 class="text-center" style="color:#f4ece8">  NYC AIRBNB LISTINGS </h2>
+	<br>	
 	<div id="main">
 		<div id="left" >
 			<div id="left-top"></div>
@@ -66,6 +80,7 @@
 	<script src="{{url_for('static', filename='js/map.js')}}"></script>
 	<script src="{{url_for('static', filename='js/BuroughBar.js')}}"></script>
 	<script src="{{url_for('static', filename='js/line.js')}}"></script>
+	<script src="{{url_for('static', filename='js/scatterplot.js')}}"></script>
 </body>
 
 </html>

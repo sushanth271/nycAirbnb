@@ -36,26 +36,49 @@ var svg = d3.select("#right-top")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(50,20)")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ")");
+    
 
     var x = d3.scaleLinear()
             .domain([0, 365])
             .range([ 0, width ]);
+
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .attr("stroke", "white")
+      .style("font-size", 15)
+      .append("text")
+                   .attr("y", 35)   // x and y for the text relative to the graph itself.
+                   .attr("x", 200)
+                   .style('font-family', "Lucida Console")
+                   .style('font-weight', '600')
+                   .attr("opacity", 0.7)
+                   .attr("font-size", "15px")
+                   .attr("fill", "white")
+                   .text("Availability");;
 
     // Add Y axis
-    console.log("------------+++++++++++++++++----------------------")
     var y = d3.scaleLinear()
-      .domain([0, d3.max(lines, function(d) {console.log(d); return d; })])
+      .domain([0, d3.max(lines, function(d) { return d; })])
       .range([ height, 0 ]);
     svg.append("g")
-      .call(d3.axisLeft(y));
-
-      console.log("------------+++++++++++++++++----------------------")
+      .call(d3.axisLeft(y))
+      .attr("stroke", "white")
+      .append("text")
+                      //.attr("y", 40)   // x and y for the text relative to the graph itself.
+                      .attr("y", "-40")
+                      .attr("x", "-50")
+                      .attr("transform", "rotate(-90)")
+                      .attr("font-size", "18px")
+                      .attr("fill", "white")
+                      .style('font-family', "Lucida Console")
+                      .style('font-weight', '600')
+                      .attr("opacity", 0.7)
+                      .text("Properties");;
+      
     // Add the line
     svg.append("path")
       .datum(lines)
