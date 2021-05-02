@@ -29,15 +29,15 @@ function drawScatterPlotv2(data){
 
 
         //console.log("max is", max)
-             var d_extent_x = d3.extent( data, function(d){console.log(d); return d.price;});
-             var d_extent_y = d3.extent( data, function(d){console.log(d); return d.rating;});
+             var d_extent_x = d3.extent( data, function(d){ return d.price;});
+             var d_extent_y = d3.extent( data, function(d){ return d.rating;});
                 //d_extent_y = d3.extent(data.ratings);
                 console.log(d_extent_y)
-            console.log("extent is", d_extent_y)
-            //x.domain(d_extent_x);
-            x.domain([0,500])
-            y.domain([50,100])
-           // y.domain(d_extent_y);
+            console.log("extent is", d_extent_x)
+            x.domain(d_extent_x);
+            //x.domain([0,500])
+            //y.domain([50,100])
+           y.domain(d_extent_y);
            // y.domain([50,100]);
 
             var axis_x = d3.axisBottom(x)
@@ -51,7 +51,7 @@ function drawScatterPlotv2(data){
                //.attr("transform", "translate(-30, 300)")
                .attr("transform", "translate("+15+","+ plot_dy + ")")
                .call(axis_x)
-               .attr("stroke", "white")
+               .attr("class", "axisColor")
                .style("font-size", 15)
                .append("text")
                    .attr("y", 40)   // x and y for the text relative to the graph itself.
@@ -68,19 +68,21 @@ function drawScatterPlotv2(data){
                .attr("transform", "translate(" + (margin.left / 2) + ", 0)")
                //.attr("transform", "translate(60,-30)")
                .call(axis_y)
-               .attr("stroke", "white")
+               .attr("class", "axisColor")
+               .attr("stroke", "#fff")
                .style("font-size", 15)
                .attr("transform", "translate(100)")
                .append("text")
                       //.attr("y", 40)   // x and y for the text relative to the graph itself.
-                      .attr("y", "-70")
-                      .attr("x", "-270")
+                      .attr("y", "-40")
+                      .attr("x", "-50")
                       .attr("transform", "rotate(-90)")
                       .attr("font-size", "20")
                       .attr("fill", "white")
                       .style('font-family', "Lucida Console")
                       .style('font-weight', '600')
                       .attr("opacity", 0.7)
+                      //.attr("transform", "translate(0,-10)")
                       .text("Ratings");
 
 

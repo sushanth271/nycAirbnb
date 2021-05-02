@@ -42,8 +42,8 @@ function drawBoroughBar(data){
                 .attr("id","svglt")
                 .attr("width","485")
                 .attr("height","450")
-                .style("background-color","#fff")
-                .attr("transform","translate(50,30)")
+                //.style("background-color","#fff")
+                .attr("transform","translate(60,30)")
                 .append("g")
 
     var x = d3.scaleBand()
@@ -59,6 +59,7 @@ function drawBoroughBar(data){
       .data(borough)
     .enter().append("rect")
       .attr("class", "bar")
+      .attr("fill","steelblue")
       .attr("x", function(d) { return x(d); })
       .attr("width", x.bandwidth())
 
@@ -72,6 +73,7 @@ function drawBoroughBar(data){
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x))
+        .attr("class", "axisColor")
         //.attr("stroke", "white")
         .style("font-size", 15)
         .append("text")
@@ -79,7 +81,9 @@ function drawBoroughBar(data){
         .attr("x", 200)
         .style('font-weight', '600')
         .attr("font-size", "15px")
-        .attr("fill", "black")
+        // /.attr("fill", "black")
+        .attr("font-size", "15px")
+        .attr("fill", "white")
         .text("Borough");
 ;
     
@@ -87,17 +91,21 @@ function drawBoroughBar(data){
     
     svg.append("g")
     .attr("transform", "translate(50)")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        .attr("class", "axisColor")
+        .style("font-size", 15) ;
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 5)
+        .attr("y", -5)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .style('stroke', '#0b1a38')
         .style('stroke-opacity', '0.3')
-        .text("PROPERTIES");
+        .attr("font-size", "18px")
+        .attr("fill", "white")
+        .text("Properties");
 
     
 

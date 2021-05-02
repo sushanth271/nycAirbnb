@@ -76,3 +76,4 @@ d3.select("#right-bottom")
 .style("margin-bottom","3%")
 .style("background-color","#252322")
 
+

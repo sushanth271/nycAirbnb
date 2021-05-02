@@ -13,7 +13,7 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-data2021 = pd.read_csv("E:/SBU/Visualization/final-project/nycAirbnb/Data/listings_2019.csv")
+data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 print(data2021.columns)
 # borough = data2021['neighbourhood_group_cleansed'].tolist()
@@ -55,11 +55,15 @@ def sendLine():
 def sendScatterPlotData():
     scatterData=[]
     dataIds = data2021['id']
-    dataPrice = data2021['price'].str.replace('$','').str.replace(',','')
+    #dataPrice = data2021['price'].str.replace('$','').str.replace(',','')
     #dataPrice = data2021['price'].str.replace(',','')
-    dataRating = data2021['review_scores_rating']
+    #dataRating = data2021['review_scores_rating']
+    dataPrice = data2021['price']
+    maxm =  max(data2021['review_scores_rating'])
+    minm = min(data2021['review_scores_rating'])
+    dataRating = 10*((data2021["review_scores_rating"] - minm)/(maxm - minm)) 
     for i in range(len(dataIds)):
-        tempDict = {'id':int(dataIds[i]), 'price':float(dataPrice[i]), 'rating': int(dataRating[i])}
+        tempDict = {'id':int(dataIds[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i])}
         scatterData.append(tempDict)
         #scatterData.append([dataIds[i], dataPrice[i], dataRating[i]])
         # scatterData[str(dataIds[i])] = {}
