@@ -13,7 +13,7 @@ d3.select("#left")
 	.style("margin-top","0.5%")
 	.style("margin-left","0.5%")
 	.style("float","left")
-	.style("background-color","#a89c99");
+	.style("background-color","#464140");
 
 d3.select("#mid")
 	.style("width","40%")
@@ -21,7 +21,7 @@ d3.select("#mid")
 	.style("margin-top","0.5%")
 	.style("margin-left","0.5%")
 	.style("float","left")
-	.style("background-color","#a89c99");
+	.style("background-color","#464140");
 
 
 d3.select("#right")
@@ -30,7 +30,7 @@ d3.select("#right")
 	.style("margin-top","0.5%")
 	.style("margin-left","0.5%")
 	.style("float","left")
-	.style("background-color","#a89c99");
+	.style("background-color","#464140");
 
 d3.select("#left-top")
 	.style("width","100%")
@@ -41,10 +41,11 @@ d3.select("#left-top")
 	
 
 d3.select("#left-bottom")
-	.style("width","97%")
-	.style("height","38%")
+	.style("width","100%")
+	.style("height","45%")
 	//.style("margin-bottom","2%")
 	//.style("margin-top", "1%")
+	.style("background-color","#252322")
 
 
     
