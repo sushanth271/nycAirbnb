@@ -13,8 +13,9 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
+#data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
 
+data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 
 
@@ -181,6 +182,24 @@ def sendScatterPlotData():
     # #print(data)
     # #print(type(dataPrice))
     # return jsonify(scatterData)
+@app.route("/parallelPlot",methods= ['POST','GET'])
+def sendPcpData():
+    pcpData=[]
+    dataIds = data2021['id']
+    dataPrice = data2021['price']
+    maxm =  max(data2021['review_scores_rating'])
+    minm = min(data2021['review_scores_rating'])
+    dataRating = 10*((data2021["review_scores_rating"] - minm)/(maxm - minm)) 
+    dataBorough = data2021['neighbourhood_group_cleansed']
+    dataBathRooms = data2021['bathrooms']
+    dataBedRooms = data2021['bedrooms']
+    dataAccomodates = data2021['accommodates']
+    dataAvail = data2021['availability_365']
+    for i in range(len(dataIds)):
+        #tempDict = {'id':int(dataIds[i]), 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) }
+        tempDict = { 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) }
+        pcpData.append(tempDict)
+    return jsonify(pcpData)
 
 if __name__ == "__main__":
     app.run(debug=True)

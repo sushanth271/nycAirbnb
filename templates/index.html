@@ -61,6 +61,30 @@
 		.axisColor text{
 		fill: white;
 		} 
+		.background path {
+			fill: none;
+			stroke: #ddd;
+			shape-rendering: crispEdges;
+			}
+
+			.foreground path {
+			fill: none;
+			stroke: steelblue;
+			}
+
+			.brush .extent {
+			fill-opacity: .3;
+			stroke: #fff;
+			shape-rendering: crispEdges;
+			}
+
+			.axis line,
+			.axis path {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+			}
+
 	</style>
 	
 </head> 
@@ -100,6 +124,7 @@
 	<script src="{{url_for('static', filename='js/line.js')}}"></script>
 	<script src="{{url_for('static', filename='js/scatterplot.js')}}"></script>
 	<script src="{{url_for('static', filename='js/pie.js')}}"></script>
+	<script src="{{url_for('static', filename='js/pcp.js')}}"></script>
 </body>
 
 </html>
