@@ -137,10 +137,36 @@ function drawScatterPlotv2(data){
                 console.log("brushed are ", d_brushed)
                 // populate table if one or more elements is brushed
                 if (d_brushed.length > 0) {
-                    clearTableRows();
-                    d_brushed.forEach(d_row => populateTableRow(d_row))
+                    drawPCP(d_brushed)
+                    // boroughMap = {}
+                    // boroughCountList = []
+                    // for( i = 0; i < d_brushed.length; i++){
+                    //     if( !( d_brushed[i]['borough'] in boroughMap))
+                    //     {
+                    //        // console.log("borugh is", d_brushed[i]['borough'])
+                    //         boroughMap[d_brushed[i]['borough']] = 1
+                    //     }
+                    //     else{
+                    //         boroughMap[d_brushed[i]['borough']]++
+                    //     }
+                        
+                    //     //drawBorough(boroughMap)
+
+                    // }
+                    
+                    // console.log("boroughMap is", boroughMap)
+                    // for( key, value of Object.entries(boroughMap)){
+                    //     tempMap = {}
+                    //     console.log("key values")
+                    //     console.log(key, value)
+                    //     tempMap = {'Borough' : key , 'value': value}
+                    //     boroughCountList.append(tempMap)
+                    // }
+                    // drawBorough(tempMap)
+                    //console.log("boroughmap is ",boroughMap )
+                    
                 } else {
-                    clearTableRows();
+                   // clearTableRows();
                 }
             }
 

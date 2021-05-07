@@ -9,7 +9,8 @@ function getpcpData(){
     
     
 function drawPCP(data){
-        console.log("pcp data is", data)
+        // console.log("pcp data is", data)
+        d3.select('#mid-bottom').select('svg').remove()
 
         var color = d3.scaleOrdinal(d3.schemeCategory10);
 

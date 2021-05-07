@@ -64,7 +64,7 @@ function update(data) {
 // Compute the position of each group on the pie:
 var pie = d3.pie()
 .value(function(d) {return d.value; })
-.sort(function(a, b) { console.log(a) ; return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+.sort(function(a, b) { return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
 var data_ready = pie(d3.entries(data))
 
 // map to data
