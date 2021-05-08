@@ -67,7 +67,7 @@ var svg = d3.select("#left-top")
 
             // Add X axis
   var x = d3.scaleLinear()
-  .domain([0, d3.max(sortedLocalities, function(d) {  return d.value; })+100])
+  .domain([0, d3.max(sortedLocalities, function(d) {  return d.value; })])
   .range([ 0, width]);
 
 svg.append("g")

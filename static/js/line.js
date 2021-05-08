@@ -200,41 +200,42 @@ function drawlinev2(data){
       // console.log("senddata is", sendData)
       drawPCP(sendData)
       drawScatterPlotv2(sendData)
+      drawBorough(sendData)
       //sending data from line chart to bar chart
       // console.log("DATA IS", sendData)
-      d_brushed=sendData
-      boroughMap = {}
-      boroughList = []
-      for( i = 0; i < d_brushed.length; i++){
-          if( !( d_brushed[i]['borough'] in boroughMap))
-          {
-              boroughMap[d_brushed[i]['borough']] = 1
-          }
-          else{
-              boroughMap[d_brushed[i]['borough']]++
-          }
-      }
+      // d_brushed=sendData
+      // boroughMap = {}
+      // boroughList = []
+      // for( i = 0; i < d_brushed.length; i++){
+      //     if( !( d_brushed[i]['borough'] in boroughMap))
+      //     {
+      //         boroughMap[d_brushed[i]['borough']] = 1
+      //     }
+      //     else{
+      //         boroughMap[d_brushed[i]['borough']]++
+      //     }
+      // }
       
-      console.log("boroughMap is", boroughMap)
-      tempmap = {}
-      BoroughList = []
+      // console.log("boroughMap is", boroughMap)
+      // tempmap = {}
+      // BoroughList = []
 
-      for(var key in boroughMap) {
-          tempmap={'Borough': key, 'value': boroughMap[key]}
-          console.log(tempmap)
-          BoroughList.push(tempmap)
-          // do something with "key" and "value" variables
-        }
-        console.log("boroughmap is ",BoroughList )
-        drawBorough(BoroughList)
+      // for(var key in boroughMap) {
+      //     tempmap={'Borough': key, 'value': boroughMap[key]}
+      //     console.log(tempmap)
+      //     BoroughList.push(tempmap)
+      //     // do something with "key" and "value" variables
+      //   }
+      //   console.log("boroughmap is ",BoroughList )
+      //   drawBorough(BoroughList)
       
-      console.log("we have finished brushing")
+      // console.log("we have finished brushing")
     }
     else{
-      getScatterPlotData();
-      getBorough();
-      getpcpData();
-      getLine();
+      getScatterPlotData(data);
+      getBorough(data);
+      getpcpData(data);
+      getLine(data);
 
       // console.log("extent",extent)
     }

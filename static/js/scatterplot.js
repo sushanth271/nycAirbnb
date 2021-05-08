@@ -147,6 +147,7 @@ function drawScatterPlotv2(data){
                 if (d_brushed.length > 0) {
                     drawPCP(d_brushed)
                     drawlinev2(d_brushed)
+                    drawBorough(d_brushed)
                     // boroughMap = {}
                     // boroughCountList = []
                     // for( i = 0; i < d_brushed.length; i++){
@@ -173,30 +174,30 @@ function drawScatterPlotv2(data){
                     // }
                     // drawBorough(tempMap)
                     // console.log("boroughmap is ",boroughMap )
-                    boroughMap = {}
-                    boroughList = []
-                    for( i = 0; i < d_brushed.length; i++){
-                        if( !( d_brushed[i]['borough'] in boroughMap))
-                        {
-                            boroughMap[d_brushed[i]['borough']] = 1
-                        }
-                        else{
-                            boroughMap[d_brushed[i]['borough']]++
-                        }
-                    }
+                    // boroughMap = {}
+                    // boroughList = []
+                    // for( i = 0; i < d_brushed.length; i++){
+                    //     if( !( d_brushed[i]['borough'] in boroughMap))
+                    //     {
+                    //         boroughMap[d_brushed[i]['borough']] = 1
+                    //     }
+                    //     else{
+                    //         boroughMap[d_brushed[i]['borough']]++
+                    //     }
+                    // }
                     
-                    console.log("boroughMap is", boroughMap)
-                    tempmap = {}
-                    BoroughList = []
+                    // console.log("boroughMap is", boroughMap)
+                    // tempmap = {}
+                    // BoroughList = []
 
-                    for(var key in boroughMap) {
-                        tempmap={'Borough': key, 'value': boroughMap[key]}
-                        console.log(tempmap)
-                        BoroughList.push(tempmap)
-                        // do something with "key" and "value" variables
-                      }
-                      console.log("boroughmap is ",BoroughList )
-                      drawBorough(BoroughList)
+                    // for(var key in boroughMap) {
+                    //     tempmap={'Borough': key, 'value': boroughMap[key]}
+                    //     console.log(tempmap)
+                    //     BoroughList.push(tempmap)
+                    //     // do something with "key" and "value" variables
+                    //   }
+                    //   console.log("boroughmap is ",BoroughList )
+                    //   drawBorough(BoroughList)
                     
                 } else {
                    // clearTableRows();
@@ -214,10 +215,10 @@ function drawScatterPlotv2(data){
 
                function dblclicked() {
                 // console.log("DOUBLE CLICK HERE ")
-                getScatterPlotData();
-                getLine();
-                getpcpData();
-                getBorough();
+                getScatterPlotData(data);
+                getLine(data);
+                getpcpData(data);
+                getBorough(data);
               }
        // });
 

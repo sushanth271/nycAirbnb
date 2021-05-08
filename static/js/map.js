@@ -253,6 +253,7 @@ function drawNYCMap(serverdata){
     drawScatterPlotv2(filteredData);
     drawlinev2(filteredData);
     drawPCP(filteredData);
+    drawBorough(filteredData);
     
     } else {
       x = width / 2;
@@ -263,6 +264,7 @@ function drawNYCMap(serverdata){
       drawScatterPlotv2(serverdata)
       drawlinev2(serverdata);
       drawPCP(serverdata);
+      drawBorough(serverdata)
       isBoroughClicked = false
       
       
