@@ -58,6 +58,7 @@ function drawPCP(data){
                                           {
                                            // console.log("d is ",Object.keys(data[0])[i])
                                            //console.log("d is here", d)
+                                            if( d != "locality"){
                                                if(d != "borough"){
                                                    return   (y[d] = d3.scaleLinear()
                                                            .domain(d3.extent(data, function(p)
@@ -77,7 +78,8 @@ function drawPCP(data){
                                                                 .range([height,0])
                                                                 .domain(data.map(function(p){ return p[d] })))
                                                                 ;
-                                                }                                            
+                                                } 
+                                            }                                           
                                          }));
             
             var values = Object.keys(data).map(function(key){

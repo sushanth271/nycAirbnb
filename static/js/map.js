@@ -1,7 +1,16 @@
+function getMap(){
+  $.post("/map", function(data){
+      //console.log("DATA FOR LINE:");
+      //console.log(data);
+      drawNYCMap(data);
 
+  });
+};
 
-function drawNYCMap(){
+getMap()
 
+function drawNYCMap(serverdata){
+  //console.log("Data is", serverdata)
   var width = 500,
   height = 650,
   centered;
@@ -63,7 +72,9 @@ function drawNYCMap(){
 
    // Get province name
    function nameFn(d){
-    return d && d.properties ? d.properties.boro_name : null;
+    //  console.log("d is ", d)
+    //  console.log("d boroname is ", d.properties.BoroName)
+    return d && d.properties ? d.properties.BoroName : null;
   }
   
      // Get province name length
@@ -74,7 +85,9 @@ function drawNYCMap(){
   
     // Get province color
   function fillFn(d){
-      return color(nameLength(d));
+      //return color(nameLength(d));
+      //console.log("d is", d)
+      return color(1);
   }
 
   var BASE_FONT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
@@ -113,8 +126,9 @@ function drawNYCMap(){
   
     bigText
       .style('font-family', fontFamily)
-      .text(text);
-  
+      .text(text)
+      .style('fill', '#fff');
+    //console.log("text is", text)
     // Use dummy text to compute actual width of the text
     // getBBox() will return bounding box
     dummyText
@@ -133,7 +147,7 @@ function drawNYCMap(){
     var positions = [];
     var rowCount = 0;
     while(yPtr < height){
-      while(xPtr < width){
+      while(xPtr < width+100){
         var point = {
           text: text,
           index: positions.length,
@@ -152,44 +166,45 @@ function drawNYCMap(){
       xPtr += Math.random() * 10;
       yPtr += textHeight + yGap;
     }
+    
+    console.log("text is", text)
+    var selection = effectLayer.selectAll('text')
+      .data(positions, function(d){return d.text+'/'+d.index;});
   
-    // var selection = effectLayer.selectAll('text')
-    //   .data(positions, function(d){return d.text+'/'+d.index;});
+    // // // Clear old ones
+    selection.exit().transition()
+      .style('opacity', 0)
+      .remove();
   
-    // // Clear old ones
-    // selection.exit().transition()
-    //   .style('opacity', 0)
-    //   .remove();
+    // // Create text but set opacity to 0
+    selection.enter().append('text')
+      .text(function(d){return d.text;})
+      .attr('x', function(d){return d.x;})
+      .attr('y', function(d){return d.y;})
+      .style('font-family', fontFamily)
+      .style('fill', '#777')
+      .style('opacity', 0);
   
-    // Create text but set opacity to 0
-    // selection.enter().append('text')
-    //   .text(function(d){return d.text;})
-    //   .attr('x', function(d){return d.x;})
-    //   .attr('y', function(d){return d.y;})
-    //   .style('font-family', fontFamily)
-    //   .style('fill', '#777')
-    //   .style('opacity', 0);
-  
-    // selection
-    //   .style('font-family', fontFamily)
-    //   .attr('x', function(d){return d.x;})
-    //   .attr('y', function(d){return d.y;});
+    selection
+      .style('font-family', fontFamily)
+      .attr('x', function(d){return d.x;})
+      .attr('y', function(d){return d.y;});
   
     // Create transtion to increase opacity from 0 to 0.1-0.5
     // Add delay based on distance from the center of the <svg> and a bit more randomness.
-    // selection.transition()
-    //   .delay(function(d){
-    //     return d.distance * 0.01 + Math.random()*1000;
-    //   })
-    //   .style('opacity', function(d){
-    //     return 0.1 + Math.random()*0.4;
-    //   });
+    selection.transition()
+      .delay(function(d){
+        return d.distance * 0.01 + Math.random()*1000;
+      })
+      .style('opacity', function(d){
+        return 0.1 + Math.random()*0.4;
+      });
   }
   
 
 
   function mouseover(d){
-    console.log("here mousover")
+    //console.log("here mousover")
       // Highlight hovered province
       d3.select(this).style('fill', 'orange');
     
@@ -213,7 +228,9 @@ function drawNYCMap(){
   
   // When clicked, zoom in
   function clicked(d) {
-    console.log("here")
+    console.log("cliked zoom in")
+    // console.log("d in click event is", nameFn(d))
+    // console.log("here")
     var x, y, k;
   
     // Compute centroid of the selected path
@@ -223,11 +240,32 @@ function drawNYCMap(){
       y = centroid[1];
       k = 4;
       centered = d;
+      console.log("zooming in")
+      
+      filteredData = []
+    for( i = 0 ; i< serverdata.length; i++){
+      if(serverdata[i]["borough"] == nameFn(d)){
+        filteredData.push(serverdata[i])
+      }
+    }
+    isBoroughClicked = true
+    //console.log("filtered data is ", filteredData)
+    drawScatterPlotv2(filteredData);
+    drawlinev2(filteredData);
+    drawPCP(filteredData);
+    
     } else {
       x = width / 2;
       y = height / 2;
       k = 1;
       centered = null;
+      console.log("server data is", serverdata)
+      drawScatterPlotv2(serverdata)
+      drawlinev2(serverdata);
+      drawPCP(serverdata);
+      isBoroughClicked = false
+      
+      
     }
   
     // Highlight the clicked province
@@ -238,6 +276,11 @@ function drawNYCMap(){
     g.transition()
       .duration(750)
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
+      //console.log("server data is", serverdata)
+    
+   
+    
+
   }  
 
       // var svg2 = d3.select("#mid-top")
@@ -249,20 +292,30 @@ function drawNYCMap(){
       //   .append("g")
         //.attr("transform", "translate(130,130)")
         
+        // d3.queue()
+        // .defer(d3.json, "/static/json/nyc.geojson")
+        // .defer(console.log("inside function", serverdata))
+        // .await(ready);
+
       d3.json('/static/json/nyc.geojson', function(mapData) {
+    // function ready(error, mapData){
           console.log(mapData.features)
+          console.log(serverdata)
           var features = mapData.features;
+          
 
           // Update color scale domain based on data
           //color.domain([0, d3.max(features, nameLength)]);
-        
+        console.log("features is", features)
           // Draw each province as a path
           mapLayer.selectAll('path')
               .data(features)
               .enter().append('path')
               .attr('d', path)
               .attr('vector-effect', 'non-scaling-stroke')
-              .style('fill', fillFn)
+              .attr('fill', function(d){
+                // /console.log("data is", serverdata);
+              })
               .on('mouseover', mouseover)
               .on('mouseout', mouseout)
               .on('click', clicked);
@@ -272,4 +325,4 @@ function drawNYCMap(){
 }
 
 
-drawNYCMap();
+//drawNYCMap();

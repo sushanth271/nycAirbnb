@@ -10,6 +10,45 @@ function getBorough(){
 getBorough()
 
 function drawBorough(data){
+  //console.log("data is", data)
+  
+  var locality_count_map = {}
+  for(i = 0; i < data.length; i++){
+    //console.log(data[i]["locality"])
+    if( !(data[i]["locality"] in locality_count_map )){
+      locality_count_map[data[i]["locality"]] = 1
+    }else{
+      locality_count_map[data[i]["locality"]]++
+    }
+  }
+  console.log(locality_count_map)
+  //locality_count_map_sorted = Object.keys(locality_count_map).sort(function(a,b){return locality_count_map[a]-locality_count_map[b]})
+  var items = Object.keys(locality_count_map).map(function(key) {
+    return [key, locality_count_map[key]];
+  });
+
+  items.sort(function(first, second) {
+    return second[1] - first[1];
+  });
+
+  //console.log(locality_count_map_sorted)
+  console.log(items.slice(0, 10));
+
+  sortedLocalities = []
+  if(items.length > 20){
+    topCount = 20
+  }else{
+    topCount = items.length
+  }
+  for(i = 0 ; i< topCount; i++){
+    tempDict = {}
+    tempDict["Borough"] = items[i][0]
+    tempDict["value"] = items[i][1]
+    sortedLocalities.push(tempDict)
+  }
+  console.log(sortedLocalities)
+
+
   d3.select("#left-top").select("svg").remove();
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 560 - margin.left - margin.right,
@@ -28,7 +67,7 @@ var svg = d3.select("#left-top")
 
             // Add X axis
   var x = d3.scaleLinear()
-  .domain([0, d3.max(data, function(d) {  return d.value; })+100])
+  .domain([0, d3.max(sortedLocalities, function(d) {  return d.value; })+100])
   .range([ 0, width]);
 
 svg.append("g")
@@ -50,7 +89,7 @@ svg.append("g")
      // Y axis
   var y = d3.scaleBand()
   .range([ 0, height ])
-  .domain(data.map(function(d) { return d.Borough; }))
+  .domain(sortedLocalities.map(function(d) { return d.Borough; }))
   .padding(.1);
 svg.append("g")
   .call(d3.axisLeft(y))
@@ -61,7 +100,7 @@ svg.append("g")
 
     //Bars
     svg.selectAll("myRect")
-    .data(data)
+    .data(sortedLocalities)
     .enter()
     .append("rect")
     .attr("x", x(0) )

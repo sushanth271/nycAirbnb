@@ -62,15 +62,16 @@ def sendBorough():
     # borough['Staten Island']=mylist.count("Staten Island")
     # return jsonify(borough)
     barData = []
-    dataIds = data2021['id']
-    mylist=data2021['neighbourhood_group_cleansed'].tolist()
-    unique = np.unique(mylist)
-    # print(unique)
-    for i in range(len(unique)):
-        tempDict={'Borough': unique[i], 'value': int(mylist.count(unique[i]))}
-        barData.append(tempDict)
+    barData = getUniversalData(data2021, barData)
+    #dataIds = data2021['id']
+    #mylist=data2021['neighbourhood_group_cleansed'].tolist()
+    #unique = np.unique(mylist)
+   # # print(unique)
+    #for i in range(len(unique)):
+       # tempDict={'Borough': unique[i], 'value': int(mylist.count(unique[i]))}
+       # barData.append(tempDict)
         # print(tempDict) 
-    return jsonify(barData)   
+    return barData  
 
 @app.route("/Localities",methods = ['POST','GET'])
 def sendLocalities():
@@ -147,6 +148,18 @@ def sendLine():
     # print(data)
     return lineData
 
+@app.route("/map",methods= ['POST','GET'])
+def sendMap():
+    lineData = []
+    lineData = getUniversalData(data2021, lineData)
+    print(data2021['availability_365'].unique())
+    data = data2021['availability_365']
+    mylist=data2021['availability_365'].tolist()
+    data= dict()
+    #for i in range(365):
+    #    data[i] = mylist.count(i)
+    # print(data)
+    return lineData
 
 @app.route("/scatterplot",methods= ['POST','GET'])
 def sendScatterPlotData():
@@ -198,11 +211,12 @@ def getUniversalData(data2021, lineData):
     dataBathRooms = data2021['bathrooms']
     dataBedRooms = data2021['bedrooms']
     dataBorough = data2021['neighbourhood_group_cleansed']
+    dataLocality = data2021['neighbourhood_cleansed']
     maxm =  max(data2021['review_scores_rating'])
     minm = min(data2021['review_scores_rating'])
     dataRating = 10*((data2021["review_scores_rating"] - minm)/(maxm - minm)) 
     for i in range(len(dataIds)):
-        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i] }
+        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i], 'locality': dataLocality[i] }
         lineData.append(tempDict)
     return jsonify(lineData)
 

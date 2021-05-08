@@ -1,7 +1,7 @@
 function getLine(){
     $.post("/line",{'line':'year'}, function(data){
-        console.log("DATA FOR LINE:");
-        console.log(data);
+        //console.log("DATA FOR LINE:");
+        //console.log(data);
         drawlinev2(data);
 
     });
@@ -12,6 +12,7 @@ getLine()
 
 
 function drawlinev2(data){
+  d3.select('#right-top').select('svg').remove()
       // set the dimensions and margins of the graph
       var margin = {top: 10, right: 30, bottom: 30, left: 60},
       width = 460 - margin.left - margin.right,
@@ -42,13 +43,13 @@ function drawlinev2(data){
     }
 
     Object.keys(availability_properties_map).forEach(function(key) {
-      // console.log("key is ", availability_properties_map[key].length)
+      //console.log("key is ", availability_properties_map[key].length)
       lines[key] = availability_properties_map[key].length;
       // /i=i+1;
   });
 
-    // console.log("availability_properties_map is", availability_properties_map)
-    // console.log("lines is", lines)
+    //console.log("availability_properties_map is", availability_properties_map)
+    //console.log("lines is", lines)
     // append the svg object to the body of the page
     var svg = d3.select("#right-top")
     .append("svg")
