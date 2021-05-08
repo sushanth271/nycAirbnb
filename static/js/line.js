@@ -2,7 +2,7 @@ function getLine(){
     $.post("/line",{'line':'year'}, function(data){
         console.log("DATA FOR LINE:");
         console.log(data);
-        drawline(data);
+        drawlinev2(data);
 
     });
 };
@@ -10,6 +10,206 @@ function getLine(){
 getLine()
 
 
+
+function drawlinev2(data){
+      // set the dimensions and margins of the graph
+      var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+      var lines =[];
+      var i = 0
+      for( i = 0; i < 370; i++){
+        lines.push(0)
+      }
+    //   Object.keys(data).forEach(function(key) {
+    //     lines[i] = data[key];
+    //     i=i+1;
+    // });
+
+    availability_properties_map = {}
+    for( i = 0; i < 370; i++){
+      availability_properties_map[i] = []
+    }
+    for(i = 0; i < data.length; i++){
+      if( !( data[i]['availability'] in availability_properties_map)){
+        availability_properties_map[data[i]['availability']] = [data[i]]
+      }
+      else{
+        availability_properties_map[data[i]['availability']].push(data[i])
+      }
+    }
+
+    Object.keys(availability_properties_map).forEach(function(key) {
+      console.log("key is ", availability_properties_map[key].length)
+      lines[key] = availability_properties_map[key].length;
+      // /i=i+1;
+  });
+
+    console.log("availability_properties_map is", availability_properties_map)
+    console.log("lines is", lines)
+    // append the svg object to the body of the page
+    var svg = d3.select("#right-top")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("transform", "translate(50,20)")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ")");
+
+    //Read the data
+   // d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
+
+      // When reading the csv, I must format variables:
+      // function(d){
+      //   return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+      // },
+
+    // Now I can use this dataset:
+    //function(data) {
+
+    // Add X axis --> it is a date format
+    var x = d3.scaleLinear()
+      .domain([0,365])
+      .range([ 0, width ]);
+
+    xAxis = svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .attr("class", "axisColor")
+      .attr("stroke", "white")
+      .style("font-size", 15)
+      .append("text")
+                   .attr("y", 35)   // x and y for the text relative to the graph itself.
+                   .attr("x", 200)
+                   .style('font-family', "Lucida Console")
+                   .style('font-weight', '600')
+                   .attr("opacity", 0.7)
+                   .attr("font-size", "15px")
+                   .attr("fill", "white")
+                   .text("Availability");
+
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, d3.max(lines, function(d) { return d; })])
+      .range([ height, 0 ]);
+
+    yAxis = svg.append("g")
+      .call(d3.axisLeft(y))
+      .attr("class", "axisColor")
+      .attr("stroke", "white")
+      .append("text")
+                      //.attr("y", 40)   // x and y for the text relative to the graph itself.
+                      .attr("y", "-40")
+                      .attr("x", "-50")
+                      .attr("transform", "rotate(-90)")
+                      .attr("font-size", "18px")
+                      .attr("fill", "white")
+                      .style('font-family', "Lucida Console")
+                      .style('font-weight', '600')
+                      .attr("opacity", 0.7)
+                      .text("Properties");;
+    // // Add a clipPath: everything out of this area won't be drawn.
+    var clip = svg.append("defs").append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("width", width )
+        .attr("height", height )
+        .attr("x", 0)
+        .attr("y", 0);
+
+    // // Add brushing
+    var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
+        .extent( [ [0,0], [width,height] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+        //.on("start",brushstart)
+        .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
+   
+    function brushstart(){
+      d3.event.sourceEvent.stopPropagation(); 
+    }
+    // // Create the line variable: where both the line and the brush take place
+    var line = svg.append('g')
+      .attr("clip-path", "url(#clip)")
+
+    console.log("Adding the line")
+    // // Add the line
+    line.append("path")
+      .datum(lines)
+     // .attr("class", "line")  // I add the class line to be able to modify this line later on.
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("d", d3.line()
+        .x(function(d,i) {  return x(i) })
+        .y(function(d) {  return y(d) })
+        )
+
+    // // Add the brushing
+    line
+      .append("g")
+        .attr("class", "brush")
+        .call(brush);
+
+    // // A function that set idleTimeOut to null
+    var idleTimeout
+    function idled() { idleTimeout = null; }
+
+    // // A function that update the chart for given boundaries
+    function updateChart() {
+
+      // What are the selected boundaries?
+      extent = d3.event.selection
+
+      // If no selection, back to initial coordinate. Otherwise, update X axis domain
+      // if(!extent){
+      //   if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
+      //   x.domain([ 4,8])
+      // }else{
+      //   console.log("extent is",  extent)
+      //   x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+      //   x.domain([extent[0], extent[1]])
+      //   line.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
+      // }
+
+      // Update axis and line position
+      // xAxis.transition().duration(1000).call(d3.axisBottom(x))
+      // line
+      //     .select('.line')
+      //     .transition()
+      //     .duration(1000)
+      //     .attr("d", d3.line()
+      //       .x(function(d,i) { return x(i) })
+      //       .y(function(d) { return y(d) })
+      //     )
+
+      sendData = []
+      console.log("extent is", extent)
+      for(i = parseInt(extent[0]); i < parseInt(extent[1])+1; i++){
+        console.log(i)
+        for( j = 0; j < availability_properties_map[i].length; j++){
+          sendData.push(availability_properties_map[i][j])
+        }
+      }
+      console.log("senddata is", sendData)
+      drawPCP(sendData)
+      drawScatterPlotv2(sendData)
+      console.log("we have finished brushing")
+    }
+
+    // If user double click, reinitialize the chart
+    svg.on("dblclick",function(){
+      x.domain(d3.extent(data, function(d) { return d.date; }))
+      xAxis.transition().call(d3.axisBottom(x))
+      line
+        .select('.line')
+        .transition()
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.date) })
+          .y(function(d) { return y(d.value) })
+      )
+    });
+
+    }//)
 
 
 
@@ -30,7 +230,7 @@ var lines =[];
         lines[i] = data[key];
         i=i+1;
     });
-console.log("lines",lines)
+
 
 var svg = d3.select("#right-top")
   .append("svg")

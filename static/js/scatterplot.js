@@ -12,6 +12,8 @@ function drawScatterPlotv2(data){
     //console.log(data)
     //datajson = JSON.parse(data)
     //console.log(datajson)
+
+    d3.select('#right-bottom').select('svg').remove()
     var margin = {top: 20, right: 0, bottom: 50, left: 85},
             svg_dx = 500, 
             svg_dy = 400,
@@ -163,7 +165,31 @@ function drawScatterPlotv2(data){
                     //     boroughCountList.append(tempMap)
                     // }
                     // drawBorough(tempMap)
-                    //console.log("boroughmap is ",boroughMap )
+                    // console.log("boroughmap is ",boroughMap )
+                    boroughMap = {}
+                    boroughList = []
+                    for( i = 0; i < d_brushed.length; i++){
+                        if( !( d_brushed[i]['borough'] in boroughMap))
+                        {
+                            boroughMap[d_brushed[i]['borough']] = 1
+                        }
+                        else{
+                            boroughMap[d_brushed[i]['borough']]++
+                        }
+                    }
+                    
+                    console.log("boroughMap is", boroughMap)
+                    tempmap = {}
+                    BoroughList = []
+
+                    for(var key in boroughMap) {
+                        tempmap={'Borough': key, 'value': boroughMap[key]}
+                        console.log(tempmap)
+                        BoroughList.push(tempmap)
+                        // do something with "key" and "value" variables
+                      }
+                      console.log("boroughmap is ",BoroughList )
+                      drawBorough(BoroughList)
                     
                 } else {
                    // clearTableRows();

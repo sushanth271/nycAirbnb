@@ -10,6 +10,7 @@ function getBorough(){
 getBorough()
 
 function drawBorough(data){
+  d3.select("#left-top").select("svg").remove();
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 560 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
