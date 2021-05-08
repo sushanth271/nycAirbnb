@@ -1,6 +1,12 @@
 d3.select("body")
    .style("background-color"," #464140")
 
+d3.select("#chart")
+	.style("z-index","1")
+	.style("float","left")
+	.style("width","100%")
+	.style("height","5%");
+
 d3.select("#main")
 	.style("z-index","1")
 	.style("float","left")

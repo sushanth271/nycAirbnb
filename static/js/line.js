@@ -19,16 +19,17 @@ function drawlinev2(data){
 
       var lines =[];
       var i = 0
-      for( i = 0; i < 370; i++){
+      for( i = 0; i < 365; i++){
         lines.push(0)
       }
     //   Object.keys(data).forEach(function(key) {
     //     lines[i] = data[key];
     //     i=i+1;
     // });
+    d3.select('#right-top').select('svg').remove()
 
     availability_properties_map = {}
-    for( i = 0; i < 370; i++){
+    for( i = 0; i < 365; i++){
       availability_properties_map[i] = []
     }
     for(i = 0; i < data.length; i++){
@@ -41,13 +42,13 @@ function drawlinev2(data){
     }
 
     Object.keys(availability_properties_map).forEach(function(key) {
-      console.log("key is ", availability_properties_map[key].length)
+      // console.log("key is ", availability_properties_map[key].length)
       lines[key] = availability_properties_map[key].length;
       // /i=i+1;
   });
 
-    console.log("availability_properties_map is", availability_properties_map)
-    console.log("lines is", lines)
+    // console.log("availability_properties_map is", availability_properties_map)
+    // console.log("lines is", lines)
     // append the svg object to the body of the page
     var svg = d3.select("#right-top")
     .append("svg")
@@ -184,30 +185,72 @@ function drawlinev2(data){
 
       sendData = []
       console.log("extent is", extent)
+
+      // Here extent is null try using a else loop
+      if (extent != null){
       for(i = parseInt(extent[0]); i < parseInt(extent[1])+1; i++){
         console.log(i)
+        if(i<365){
         for( j = 0; j < availability_properties_map[i].length; j++){
           sendData.push(availability_properties_map[i][j])
         }
       }
-      console.log("senddata is", sendData)
+      }
+      // console.log("senddata is", sendData)
       drawPCP(sendData)
       drawScatterPlotv2(sendData)
+      //sending data from line chart to bar chart
+      // console.log("DATA IS", sendData)
+      d_brushed=sendData
+      boroughMap = {}
+      boroughList = []
+      for( i = 0; i < d_brushed.length; i++){
+          if( !( d_brushed[i]['borough'] in boroughMap))
+          {
+              boroughMap[d_brushed[i]['borough']] = 1
+          }
+          else{
+              boroughMap[d_brushed[i]['borough']]++
+          }
+      }
+      
+      console.log("boroughMap is", boroughMap)
+      tempmap = {}
+      BoroughList = []
+
+      for(var key in boroughMap) {
+          tempmap={'Borough': key, 'value': boroughMap[key]}
+          console.log(tempmap)
+          BoroughList.push(tempmap)
+          // do something with "key" and "value" variables
+        }
+        console.log("boroughmap is ",BoroughList )
+        drawBorough(BoroughList)
+      
       console.log("we have finished brushing")
     }
+    else{
+      getScatterPlotData();
+      getBorough();
+      getpcpData();
+      getLine();
+
+      // console.log("extent",extent)
+    }
+  }
 
     // If user double click, reinitialize the chart
-    svg.on("dblclick",function(){
-      x.domain(d3.extent(data, function(d) { return d.date; }))
-      xAxis.transition().call(d3.axisBottom(x))
-      line
-        .select('.line')
-        .transition()
-        .attr("d", d3.line()
-          .x(function(d) { return x(d.date) })
-          .y(function(d) { return y(d.value) })
-      )
-    });
+    // svg.on("dblclick",function(){
+    //   x.domain(d3.extent(data, function(d) { return d.date; }))
+    //   xAxis.transition().call(d3.axisBottom(x))
+    //   line
+    //     .select('.line')
+    //     .transition()
+    //     .attr("d", d3.line()
+    //       .x(function(d) { return x(d.date) })
+    //       .y(function(d) { return y(d.value) })
+    //   )
+    // });
 
     }//)
 

@@ -103,6 +103,8 @@ function drawScatterPlotv2(data){
                              //.attr("transform", "translate("+15+","+ plot_dy + ")")
                              .attr("class", "non_brushed");
 
+            
+
 
             function highlightBrushedCircles() {
 
@@ -129,7 +131,9 @@ function drawScatterPlotv2(data){
 
                 // disregard brushes w/o selections  
                 // ref: http://bl.ocks.org/mbostock/6232537
-                if (!d3.event.selection) return;
+                if (!d3.event.selection) {
+                    return;
+                }
 
                 // programmed clearing of brush after mouse-up
                 // ref: https://github.com/d3/d3-brush/issues/10
@@ -140,6 +144,7 @@ function drawScatterPlotv2(data){
                 // populate table if one or more elements is brushed
                 if (d_brushed.length > 0) {
                     drawPCP(d_brushed)
+                    drawlinev2(d_brushed)
                     // boroughMap = {}
                     // boroughCountList = []
                     // for( i = 0; i < d_brushed.length; i++){
@@ -193,6 +198,7 @@ function drawScatterPlotv2(data){
                     
                 } else {
                    // clearTableRows();
+                   
                 }
             }
 
@@ -201,7 +207,16 @@ function drawScatterPlotv2(data){
                           .on("end", displayTable); 
 
             svg.append("g")
-               .call(brush);
+               .call(brush)
+               .on("dblclick", dblclicked);
+
+               function dblclicked() {
+                // console.log("DOUBLE CLICK HERE ")
+                getScatterPlotData();
+                getLine();
+                getpcpData();
+                getBorough();
+              }
        // });
 
         function clearTableRows() {
