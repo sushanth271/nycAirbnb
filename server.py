@@ -15,6 +15,8 @@ app = Flask(__name__)
 
 data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
 
+
+year = 2019
 # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 
@@ -38,7 +40,9 @@ data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
 # for i in range(len(unique)):
 #     tempDict={'Borough': unique[i], 'value': int(mylist.count(unique[i]))}
 #     barData.append(tempDict)
-
+@app.route("/kval")
+def init():
+    return render_template('index.html')
 
 
 

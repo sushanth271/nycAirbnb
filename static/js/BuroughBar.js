@@ -48,6 +48,8 @@ function drawBorough(data){
   }
   console.log(sortedLocalities)
 
+  var selectedList=[]
+
 
   d3.select("#left-top").select("svg").remove();
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
@@ -103,110 +105,152 @@ svg.append("g")
     .data(sortedLocalities)
     .enter()
     .append("rect")
+    
     .attr("x", x(0) )
-    .on("mouseover",  function(d){ d3.select(this).style("fill","#900C3F"); d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
-                  .on("mouseout",  function(d){ d3.select(this).style("fill","#0B71E5 "); d3.select("#hovertext").remove();  })
-                  .transition()
-                  .duration(300)
+    
+    // .on("mouseover",  function(d){ d3.select(this).style("fill","#900C3F"); d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
+    // .on("mouseout",  function(d){ d3.select(this).style("fill","steelblue "); d3.select("#hovertext").remove();  })
+    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
+    .on("mouseout",  function(d){  d3.select("#hovertext").remove();  })
+    .on("click",function(d){
+                    
+                    if (selectedList.includes(d.Borough)){
+                      d3.select(this).style("fill","steelblue")
+                      console.log("it is in selected so remove from list");
+                      var index = selectedList.indexOf(d.Borough)
+                      selectedList.splice(index,1);
+                    }
+                    else{
+                      selectedList.push(d.Borough);
+                      d3.select(this).style("fill","green");
+                    }
+                      console.log(selectedList)
+                      // d3.select(this).style("fill","green");
+
+                      filteredData = []
+                      for( i = 0 ; i< data.length; i++){
+                        for(j=0; j<selectedList.length;j++)
+                      if(data[i]["locality"] == selectedList[j]){
+                        filteredData.push(data[i])
+                    }
+                  }
+                  // console.log(filteredData)
+                  if (selectedList.length>0){
+                    drawScatterPlotv2(filteredData)
+                    drawPCP(filteredData)
+                    drawlinev2(filteredData)
+                  }
+                  else{
+                    drawScatterPlotv2(data)
+                    drawPCP(data)
+                    drawlinev2(data)
+                  }
+                  })
+    .transition()
+    .duration(300)
     .attr("y", function(d) { return y(d.Borough); })
     .attr("width", function(d) { return x(d.value); })
     .attr("height", y.bandwidth() )
     .attr("fill", "steelblue")
+
+
+    
+    // console.log("AT LAST",selectedList);
 }
 
-function drawBoroughBarOld(data){
+// function drawBoroughBarOld(data){
     
-   //console.log("INSIDE FUNCTION DATA IS");
-    //console.log(data);
-    //console.log(data['Bronx']);
-    width = 450;
-    height = 400;
-    //console.log(Object.keys(data).length);
-    var borough =[];
-    var i=0
-    Object.keys(data).forEach(function(key) {
-        borough[i] = key;
-        i=i+1;
-    });
-    //console.log("data is");
-    //console.log(borough);
-    var properties = [];
-    i=0;
-    Object.keys(data).forEach(function(key) {
-        properties[i] = data[key];
-        i=i+1;
-    });
-    //console.log(properties);
-    var svg =d3.select("#left-top")
-                .append("svg")
-                .attr("id","svglt")
-                .attr("width","485")
-                .attr("height","450")
-                //.style("background-color","#fff")
-                .attr("transform","translate(60,30)")
-                .append("g")
+//    //console.log("INSIDE FUNCTION DATA IS");
+//     //console.log(data);
+//     //console.log(data['Bronx']);
+//     width = 450;
+//     height = 400;
+//     //console.log(Object.keys(data).length);
+//     var borough =[];
+//     var i=0
+//     Object.keys(data).forEach(function(key) {
+//         borough[i] = key;
+//         i=i+1;
+//     });
+//     //console.log("data is");
+//     //console.log(borough);
+//     var properties = [];
+//     i=0;
+//     Object.keys(data).forEach(function(key) {
+//         properties[i] = data[key];
+//         i=i+1;
+//     });
+//     //console.log(properties);
+//     var svg =d3.select("#left-top")
+//                 .append("svg")
+//                 .attr("id","svglt")
+//                 .attr("width","485")
+//                 .attr("height","450")
+//                 //.style("background-color","#fff")
+//                 .attr("transform","translate(60,30)")
+//                 .append("g")
 
-    var x = d3.scaleBand()
-                .range([50, width])
-                .padding(0.1);
-    var y = d3.scaleLinear()
-                .range([height, 30]);
+//     var x = d3.scaleBand()
+//                 .range([50, width])
+//                 .padding(0.1);
+//     var y = d3.scaleLinear()
+//                 .range([height, 30]);
     
-    x.domain(borough.map(function(d) {  return d; }));
-    y.domain([0, d3.max(properties, function(d) {  return d; })+100]);
+//     x.domain(borough.map(function(d) {  return d; }));
+//     y.domain([0, d3.max(properties, function(d) {  return d; })+100]);
 
-    svg.selectAll(".bar")
-      .data(borough)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("fill","steelblue")
-      .attr("x", function(d) { return x(d); })
-      .attr("width", x.bandwidth())
+//     svg.selectAll(".bar")
+//       .data(borough)
+//     .enter().append("rect")
+//       .attr("class", "bar")
+//       .attr("fill","steelblue")
+//       .attr("x", function(d) { return x(d); })
+//       .attr("width", x.bandwidth())
 
 
-        svg.selectAll(".bar")
-        .data(properties)
-      .attr("y", function(d) { return y(d); })
-      .attr("height", function(d) { return height - y(d); });  
-
-    
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .attr("class", "axisColor")
-        //.attr("stroke", "white")
-        .style("font-size", 15)
-        .append("text")
-        .attr("y", 40)   // x and y for the text relative to the graph itself.
-        .attr("x", 200)
-        .style('font-weight', '600')
-        .attr("font-size", "15px")
-        // /.attr("fill", "black")
-        .attr("font-size", "15px")
-        .attr("fill", "white")
-        .text("Borough");
-;
-    
+//         svg.selectAll(".bar")
+//         .data(properties)
+//       .attr("y", function(d) { return y(d); })
+//       .attr("height", function(d) { return height - y(d); });  
 
     
-    svg.append("g")
-    .attr("transform", "translate(50)")
-        .call(d3.axisLeft(y))
-        .attr("class", "axisColor")
-        .style("font-size", 15) ;
+//     svg.append("g")
+//         .attr("transform", "translate(0," + height + ")")
+//         .call(d3.axisBottom(x))
+//         .attr("class", "axisColor")
+//         //.attr("stroke", "white")
+//         .style("font-size", 15)
+//         .append("text")
+//         .attr("y", 40)   // x and y for the text relative to the graph itself.
+//         .attr("x", 200)
+//         .style('font-weight', '600')
+//         .attr("font-size", "15px")
+//         // /.attr("fill", "black")
+//         .attr("font-size", "15px")
+//         .attr("fill", "white")
+//         .text("Borough");
+// ;
+    
 
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -5)
-        .attr("x",0 - (height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .style('stroke', '#0b1a38')
-        .style('stroke-opacity', '0.3')
-        .attr("font-size", "18px")
-        .attr("fill", "white")
-        .text("Properties");
+    
+//     svg.append("g")
+//     .attr("transform", "translate(50)")
+//         .call(d3.axisLeft(y))
+//         .attr("class", "axisColor")
+//         .style("font-size", 15) ;
+
+//     svg.append("text")
+//         .attr("transform", "rotate(-90)")
+//         .attr("y", -5)
+//         .attr("x",0 - (height / 2))
+//         .attr("dy", "1em")
+//         .style("text-anchor", "middle")
+//         .style('stroke', '#0b1a38')
+//         .style('stroke-opacity', '0.3')
+//         .attr("font-size", "18px")
+//         .attr("fill", "white")
+//         .text("Properties");
 
     
 
-}
+// }

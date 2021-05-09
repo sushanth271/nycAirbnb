@@ -9,11 +9,11 @@ function getScatterPlotData(){
 }
 
 function drawScatterPlotv2(data){
-    console.log("click is", isBoroughClicked)
+    // console.log("click is", isBoroughClicked)
     //console.log(data)
     //datajson = JSON.parse(data)
     //console.log(datajson)
-    console.log("Scatter data", data)
+    // console.log("Scatter data", data)
     d3.select('#right-bottom').select('svg').remove()
     var margin = {top: 20, right: 0, bottom: 50, left: 85},
             svg_dx = 500, 
@@ -142,7 +142,7 @@ function drawScatterPlotv2(data){
 
                 var d_brushed =  d3.selectAll(".brushed").data();
                 console.log("brushed are ", d_brushed)
-                console.log("click is", isBoroughClicked)
+                // console.log("click is", isBoroughClicked)
                 // populate table if one or more elements is brushed
                 if (d_brushed.length > 0) {
                     drawPCP(d_brushed)
@@ -211,6 +211,7 @@ function drawScatterPlotv2(data){
 
             svg.append("g")
                .call(brush)
+               .attr("transform", "translate(15)")
                .on("dblclick", dblclicked);
 
                function dblclicked() {
