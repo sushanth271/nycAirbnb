@@ -206,7 +206,12 @@ function drawNYCMap(serverdata){
   function mouseover(d){
     //console.log("here mousover")
       // Highlight hovered province
-      d3.select(this).style('fill', 'orange');
+      //d3.select(this).style('fill', 'orange');
+      d3.select(this)
+      .transition()
+      .duration(200)
+      .style("opacity", 1)
+      .style("stroke", "black")
     
       // Draw effects
       textArt(nameFn(d));
@@ -214,9 +219,17 @@ function drawNYCMap(serverdata){
     
   function mouseout(d){
       // Reset province color
-      mapLayer.selectAll('path')
-        .style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
+      // mapLayer.selectAll('path')
+      //   .style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
     
+      d3.selectAll(".Country")
+      .transition()
+      .duration(200)
+      .style("opacity", .8)
+    d3.select(this)
+      .transition()
+      .duration(200)
+      .style("stroke", "transparent")
       // Remove effect text
       effectLayer.selectAll('text').transition()
         .style('opacity', 0)
@@ -271,8 +284,8 @@ function drawNYCMap(serverdata){
     }
   
     // Highlight the clicked province
-    mapLayer.selectAll('path')
-      .style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
+    //mapLayer.selectAll('path')
+      //.style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
   
     // Zoom
     g.transition()
@@ -293,15 +306,28 @@ function drawNYCMap(serverdata){
       //   .style("background-color", "#fff")
       //   .append("g")
         //.attr("transform", "translate(130,130)")
+        var data = d3.map();
+        var colorScale = d3.scaleThreshold()
+  .domain([0,100,200,300,400,500,600,700,1000])
+  .range(d3.schemeBlues[7]);
+        d3.queue()
+        .defer(d3.json, "/static/json/nyc.geojson")
+        .defer(d3.csv, "/static/json/borough_freq_2020.csv", function(d) { data.set(d.neighbourhood_group_cleansed, +d.count); })
+        .await(ready);
+//   d3.csv("/Data/listings_2019.csv", 
+//         function(data){
+//           for (var i = 0; i < data.length; i++) {
+//             console.log(data[i]);
         
-        // d3.queue()
-        // .defer(d3.json, "/static/json/nyc.geojson")
-        // .defer(console.log("inside function", serverdata))
-        // .await(ready);
+//         }
+// });
 
-      d3.json('/static/json/nyc.geojson', function(mapData) {
-    // function ready(error, mapData){
-          // console.log(mapData.features)
+//d3.csv('/static/json/borough_freq_2020.csv', function(error, temp){  console.log(temp)});
+
+     // d3.json('/static/json/nyc.geojson', function(mapData) {
+     function ready(error, mapData){
+       if(error){console.log(error);}
+           console.log(mapData)
           // console.log(serverdata)
           var features = mapData.features;
           
@@ -316,13 +342,17 @@ function drawNYCMap(serverdata){
               .attr('d', path)
               .attr('vector-effect', 'non-scaling-stroke')
               .attr('fill', function(d){
-                // /console.log("data is", serverdata);
+                // /console.log("data is", serverdata);'
+                console.log(d)
+                d.total = data.get(d.properties.BoroName) || 0;
+                console.log(d.total)
+                return colorScale(d.total);
               })
               .on('mouseover', mouseover)
               .on('mouseout', mouseout)
               .on('click', clicked);
 
-      });
+      };
  
 }
 
