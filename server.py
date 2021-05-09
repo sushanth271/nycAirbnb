@@ -13,11 +13,9 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
+#data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
 
-
-year = 2019
-# data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 
 

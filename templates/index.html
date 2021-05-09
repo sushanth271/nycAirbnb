@@ -5,8 +5,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-	<style type="text/css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+<style type="text/css">
 		.line {
 		  fill: none;
 		  stroke: steelblue;
@@ -84,6 +85,29 @@
 			stroke: #000;
 			shape-rendering: crispEdges;
 			}
+			.track,
+    .track-inset,
+    .track-overlay {
+      stroke-linecap: round;
+    }
+
+    .track {
+      stroke: #000;
+      stroke-opacity: 0.3;
+      stroke-width: 10px;
+    }
+
+    .track-inset {
+      stroke: #ddd;
+      stroke-width: 8px;
+    }
+
+    .track-overlay {
+      pointer-events: stroke;
+      stroke-width: 50px;
+      stroke: transparent;
+      cursor: crosshair;
+    }
 
 			.tooltip {
 				fill: white;
@@ -102,7 +126,16 @@
     <!-- <h1 align="center"> NYC AIRBNB LISTINGS</h1> -->
 	 <br>
 	<h2 class="text-center" style="color:#f4ece8">  NYC AIRBNB LISTINGS </h2>
-	<div id="chart"></div>	
+
+	<div  style="width:50%; margin:0 auto">
+		<div>
+		<center><label   for="fader" style=" display:inline-block; font-size: 30px; color:white" >Year : <output  for="fader" style="display:inline-block;font-size: 30px; color:white; margin:0 auto" id="volume">2021</output></label></center>
+		
+		<input  type="range" style="width:100%" min="2018" max="2021" value="50" id="fader" step="1" oninput="outputUpdate(value)" list="tickmarks"> 
+
+		</div>
+	</div>
+
 	<div id="main">
 		<div id="left" >
 			<div id="left-top"></div>
@@ -126,6 +159,7 @@
 	</div>
 	<script type='text/javascript' > 
 		var isBoroughClicked = false; 
+		
 	  </script>
 	<script src="{{url_for('static', filename='js/index.js')}}"></script>
 	<script src="{{url_for('static', filename='js/style.js')}}"></script>
