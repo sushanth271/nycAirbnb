@@ -120,10 +120,12 @@ function drawPCP(data){
                     .call(d3.drag()
                     .subject(function(d) { return {x: x(d)}; })
                     .on("start", function(d) {
+                        //console.log("drag start");
                        dragging[d] = x(d);
                        background.attr("visibility", "hidden");
                        })
                     .on("drag", function(d) {
+                           // console.log("d is", d);
                                  dragging[d] = Math.min(width, Math.max(0, d3.event.x));
                                  foreground.attr("d", path);
                                  dimensions.sort(function(a, b) { return position(a) - position(b); });
@@ -142,6 +144,7 @@ function drawPCP(data){
                      .attr("visibility", null);
                }));
             //    console.log("creating axes")
+               //console.log("creating axes")
          g.append("g")
              .attr("class", "axis")
              .each(function(d) {d3.select(this).call(axis.scale(y[d])); })
@@ -164,6 +167,7 @@ function drawPCP(data){
 
 
        function brush() {
+           //console.log("brush started")
                const actives = [];
                svg.selectAll('.brush')
                    .filter(function(d) { return d3.brushSelection(this); })
@@ -173,17 +177,24 @@ function drawPCP(data){
                                  extent: d3.brushSelection(this)
                              });
                            });
+                //console.log("actives is ", actives)
                 foreground.style('display', function(d) {
                                  return actives.every(function(active) {
                                          const dim = active.dimension;
+                                         //console.log(active.extent[0] <= y[dim](d[dim]) && y[dim](d[dim]) <= active.extent[1])
                                          return active.extent[0] <= y[dim](d[dim]) && y[dim](d[dim]) <= active.extent[1];
                              }) ? null : 'none';
                })
-            //    console.log(actives)
+               g.selectAll("rect") 
+               .attr("width", 20)
+               .attr("x", -10)
        }
 
        function brushstart() {
          d3.event.sourceEvent.stopPropagation();
+         g.selectAll("rect") 
+                        .attr("width", 20)
+                        .attr("x", -10)
        }
 
        function transition(g) {
@@ -211,4 +222,4 @@ function drawPCP(data){
 }
 
 
-getpcpData()
+getpcpData()    
