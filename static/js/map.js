@@ -14,7 +14,7 @@ function drawNYCMap(serverdata){
   var width = 500,
   height = 650,
   centered;
-
+  d3.select('#mid-top').select('svg').remove()
   // Define color scale
   var color = d3.scaleLinear()
     .domain([1, 20])
@@ -301,14 +301,14 @@ function drawNYCMap(serverdata){
 
       d3.json('/static/json/nyc.geojson', function(mapData) {
     // function ready(error, mapData){
-          console.log(mapData.features)
-          console.log(serverdata)
+          // console.log(mapData.features)
+          // console.log(serverdata)
           var features = mapData.features;
           
 
           // Update color scale domain based on data
           //color.domain([0, d3.max(features, nameLength)]);
-        console.log("features is", features)
+        // console.log("features is", features)
           // Draw each province as a path
           mapLayer.selectAll('path')
               .data(features)

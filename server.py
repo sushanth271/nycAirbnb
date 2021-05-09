@@ -13,9 +13,11 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-#data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
+data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
 
-data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+year = 2019
+
+# data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 
 
@@ -38,15 +40,29 @@ data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 # for i in range(len(unique)):
 #     tempDict={'Borough': unique[i], 'value': int(mylist.count(unique[i]))}
 #     barData.append(tempDict)
-@app.route("/kval")
-def init():
-    return render_template('index.html')
-
-
 
 @app.route("/")
 def init():
     return render_template('index.html')
+
+
+@app.route("/getYear",methods = ['POST', 'GET'])
+def getYear():
+    global year
+    global data2021
+    year = request.form.get('year')
+    if(year == "2019"):
+        data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
+        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+    elif (year == "2020"):
+        data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
+        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+    elif (year == "2021"):
+        data2021 = pd.read_csv("Data\listings_2021_stratified.csv")
+        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+
+    # print(type(year))
+    return "SUCCESS"
 
 
 @app.route("/test",methods = ['POST', 'GET'])
@@ -55,6 +71,7 @@ def test():
 
 @app.route("/Borough",methods = ['POST','GET'])
 def sendBorough():
+    # print("Year is:",year)
     # borough = dict()
     # mylist=data2021['neighbourhood_group_cleansed'].tolist()
     # borough['Manhattan']=mylist.count("Manhattan")
@@ -112,7 +129,7 @@ def sendPie():
     data1 = []
     data2 = []
     unique = data2021['bathrooms'].unique().tolist()
-    print(unique)
+    # print(unique)
     unique.sort()
     mylist=data2021['bathrooms'].tolist()
     pieData = []
@@ -120,7 +137,7 @@ def sendPie():
         tempDict={'Bathroom': unique[i], 'value': int(mylist.count(unique[i]))}
         data1.append(tempDict)
     unique = data2021['bedrooms'].unique().tolist()
-    print(unique)
+    # print(unique)
     unique.sort()
     mylist=data2021['bedrooms'].tolist()
     pieData = []
@@ -140,7 +157,7 @@ def sendPie():
 def sendLine():
     lineData = []
     lineData = getUniversalData(data2021, lineData)
-    print(data2021['availability_365'].unique())
+    # print(data2021['availability_365'].unique())
     data = data2021['availability_365']
     mylist=data2021['availability_365'].tolist()
     data= dict()
@@ -148,13 +165,14 @@ def sendLine():
     #    data[i] = mylist.count(i)
 
     # print(data)
+    # print(len(lineData))
     return lineData
 
 @app.route("/map",methods= ['POST','GET'])
 def sendMap():
     lineData = []
     lineData = getUniversalData(data2021, lineData)
-    print(data2021['availability_365'].unique())
+    # print(data2021['availability_365'].unique())
     data = data2021['availability_365']
     mylist=data2021['availability_365'].tolist()
     data= dict()
@@ -182,6 +200,7 @@ def sendScatterPlotData():
     for i in range(len(dataIds)):
         tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i] , 'locality': dataLocality[i]}
         scatterData.append(tempDict)
+    print(len(scatterData))
     return jsonify(scatterData)
 
 
@@ -221,6 +240,8 @@ def getUniversalData(data2021, lineData):
     for i in range(len(dataIds)):
         tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i], 'locality': dataLocality[i] }
         lineData.append(tempDict)
+    print(len(lineData))
+    
     return jsonify(lineData)
 
 if __name__ == "__main__":

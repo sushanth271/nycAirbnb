@@ -1,3 +1,3 @@
 $.post("/test", {'data': 'received'}, function(data){
-    console.log(data);
+    // console.log(data);
 });

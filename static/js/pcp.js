@@ -1,6 +1,6 @@
 function getpcpData(){
     $.post("/parallelPlot",{'pcpYear':'year'}, function(data){
-        console.log("data For pcp:");
+        // console.log("data For pcp:");
        drawPCP(data);
 
     });
@@ -72,7 +72,7 @@ function drawPCP(data){
                                                            .range([height, 0]));   
                                                         }
                                                 else{
-                                                    console.log("ehre", data.map(function(p){ return p[d] }));
+                                                    // console.log("ehre", data.map(function(p){ return p[d] }));
                                                     return ( 
                                                         y[d] = d3.scalePoint()
                                                                 .range([height,0])
@@ -141,7 +141,7 @@ function drawPCP(data){
                      .duration(0)
                      .attr("visibility", null);
                }));
-               console.log("creating axes")
+            //    console.log("creating axes")
          g.append("g")
              .attr("class", "axis")
              .each(function(d) {d3.select(this).call(axis.scale(y[d])); })
@@ -179,6 +179,7 @@ function drawPCP(data){
                                          return active.extent[0] <= y[dim](d[dim]) && y[dim](d[dim]) <= active.extent[1];
                              }) ? null : 'none';
                })
+            //    console.log(actives)
        }
 
        function brushstart() {

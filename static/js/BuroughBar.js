@@ -1,7 +1,7 @@
 function getBorough(){
     $.post("/Borough",{'borough':'year'}, function(data){
-        console.log("DATA FOR BOROUGH:")
-        console.log(data)
+        // console.log("DATA FOR BOROUGH:")
+        // console.log(data)
         // drawBoroughBar(data);
         drawBorough(data);
     });
@@ -21,7 +21,7 @@ function drawBorough(data){
       locality_count_map[data[i]["locality"]]++
     }
   }
-  console.log(locality_count_map)
+  // console.log(locality_count_map)
   //locality_count_map_sorted = Object.keys(locality_count_map).sort(function(a,b){return locality_count_map[a]-locality_count_map[b]})
   var items = Object.keys(locality_count_map).map(function(key) {
     return [key, locality_count_map[key]];
@@ -32,7 +32,7 @@ function drawBorough(data){
   });
 
   //console.log(locality_count_map_sorted)
-  console.log(items.slice(0, 10));
+  // console.log(items.slice(0, 10));
 
   sortedLocalities = []
   if(items.length > 20){
@@ -46,7 +46,7 @@ function drawBorough(data){
     tempDict["value"] = items[i][1]
     sortedLocalities.push(tempDict)
   }
-  console.log(sortedLocalities)
+  // console.log(sortedLocalities)
 
   var selectedList=[]
 

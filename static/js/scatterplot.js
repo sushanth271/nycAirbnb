@@ -1,6 +1,6 @@
 function getScatterPlotData(){
     $.post("/scatterplot",{'scatterYear':'year'}, function(data){
-        console.log("DATA For scatter:");
+        // console.log("DATA For scatter:");
        // console.log(data);
         drawScatterPlotv2(data);
 
@@ -9,6 +9,8 @@ function getScatterPlotData(){
 }
 
 function drawScatterPlotv2(data){
+    // console.log("DATA For scatter:");
+    // console.log(data)
     // console.log("click is", isBoroughClicked)
     //console.log(data)
     //datajson = JSON.parse(data)
@@ -142,6 +144,7 @@ function drawScatterPlotv2(data){
 
                 var d_brushed =  d3.selectAll(".brushed").data();
                 console.log("brushed are ", d_brushed)
+                // console.log()
                 // console.log("click is", isBoroughClicked)
                 // populate table if one or more elements is brushed
                 if (d_brushed.length > 0) {

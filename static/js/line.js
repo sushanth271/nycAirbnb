@@ -20,7 +20,7 @@ function drawlinev2(data){
 
       var lines =[];
       var i = 0
-      for( i = 0; i < 365; i++){
+      for( i = 0; i < 366; i++){
         lines.push(0)
       }
     //   Object.keys(data).forEach(function(key) {
@@ -30,7 +30,7 @@ function drawlinev2(data){
     d3.select('#right-top').select('svg').remove()
 
     availability_properties_map = {}
-    for( i = 0; i < 365; i++){
+    for( i = 0; i < 366; i++){
       availability_properties_map[i] = []
     }
     for(i = 0; i < data.length; i++){
@@ -45,8 +45,10 @@ function drawlinev2(data){
     Object.keys(availability_properties_map).forEach(function(key) {
       //console.log("key is ", availability_properties_map[key].length)
       lines[key] = availability_properties_map[key].length;
+      
       // /i=i+1;
   });
+  // console.log(lines)
 
     //console.log("availability_properties_map is", availability_properties_map)
     //console.log("lines is", lines)
@@ -72,7 +74,7 @@ function drawlinev2(data){
 
     // Add X axis --> it is a date format
     var x = d3.scaleLinear()
-      .domain([0,365])
+      .domain([0,366])
       .range([ 0, width ]);
 
     xAxis = svg.append("g")
@@ -133,7 +135,7 @@ function drawlinev2(data){
     var line = svg.append('g')
       .attr("clip-path", "url(#clip)")
 
-    console.log("Adding the line")
+    // console.log("Adding the line")
     // // Add the line
     line.append("path")
       .datum(lines)
@@ -194,14 +196,14 @@ function drawlinev2(data){
       // Here extent is null try using a else loop
       if (extent != null){
       for(i = parseInt(extent[0]); i < parseInt(extent[1])+1; i++){
-        console.log(i)
-        if(i<365){
+        // console.log(i)
+        if(i<366){
         for( j = 0; j < availability_properties_map[i].length; j++){
           sendData.push(availability_properties_map[i][j])
         }
       }
       }
-      // console.log("senddata is", sendData)
+      console.log("senddata is", sendData)
       drawPCP(sendData)
       drawScatterPlotv2(sendData)
       drawBorough(sendData)

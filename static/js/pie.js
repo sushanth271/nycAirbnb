@@ -1,7 +1,7 @@
 function getPie(){
     $.post("/Pie",{'borough':'year'}, function(data){
-        console.log("DATA FOR PIE CAHRT:")
-        console.log(data)
+        // console.log("DATA FOR PIE CAHRT:")
+        // console.log(data)
         drawPie(data)
     });
 };
@@ -15,7 +15,7 @@ function send(data){
 }
 
 function drawPie(data){
-    console.log("VALUE OF K IS:",k)
+    // console.log("VALUE OF K IS:",k)
     // set the dimensions and margins of the graph
 var width = 450
 height = 450
