@@ -1,7 +1,7 @@
 function getLine(){
     $.post("/line",{'line':'year'}, function(data){
-        //console.log("DATA FOR LINE:");
-        //console.log(data);
+        // console.log("DATA FOR LINE:");
+        // console.log(data);
         drawlinev2(data);
 
     });
@@ -210,6 +210,7 @@ function drawlinev2(data){
       drawPCP(sendData)
       drawScatterPlotv2(sendData)
       drawBorough(sendData)
+      drawNYCMap(sendData)
       //sending data from line chart to bar chart
       // console.log("DATA IS", sendData)
       // d_brushed=sendData
@@ -245,6 +246,7 @@ function drawlinev2(data){
       getBorough(data);
       getpcpData(data);
       getLine(data);
+      drawNYCMap(data);
 
       // console.log("extent",extent)
     }

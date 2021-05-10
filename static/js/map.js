@@ -1,7 +1,7 @@
 function getMap(){
   $.post("/map", function(data){
-      //console.log("DATA FOR LINE:");
-      //console.log(data);
+      // console.log("DATA FOR map:");
+      // console.log(data);
       drawNYCMap(data);
 
   });
@@ -10,7 +10,29 @@ function getMap(){
 getMap()
 
 function drawNYCMap(serverdata){
-  //console.log("Data is", serverdata)
+  console.log("Data is", serverdata)
+
+  // /boroughCountMap = {}
+   boroughMap = {
+     "Bronx":0,
+     "Brooklyn":0,
+     "Manhattan":0,
+     "Queens":0,
+     "Staten Island":0
+   }
+     
+      for( i = 0; i < serverdata.length; i++){
+          // if( !( serverdata[i]['borough'] in boroughMap))
+          // {
+          //     boroughMap[serverdata[i]['borough']] = 1
+          // }
+          // else{
+              boroughMap[serverdata[i]['borough']]++
+          //}
+      }
+      
+      console.log("boroughMap is", boroughMap)
+
   var width = 500,
   height = 650,
   centered;
@@ -207,14 +229,23 @@ function drawNYCMap(serverdata){
     //console.log("here mousover")
       // Highlight hovered province
       //d3.select(this).style('fill', 'orange');
+      //console.log(data)
       d3.select(this)
       .transition()
       .duration(200)
       .style("opacity", 1)
       .style("stroke", "black")
-    
+      var tooltip = d3.select("div.toolTip");
+
+      console.log(d.properties.BoroName)
       // Draw effects
       textArt(nameFn(d));
+      tooltip.classed("hidden", false)
+      .style("top", (d3.event.pageY) + "px")
+      .style("left", (d3.event.pageX + 10) + "px")
+                       //.html(d.properties.BoroName + ":" +data["$"+d.properties.BoroName]);
+                       .html(d.properties.BoroName + ":" + boroughMap[d.properties.BoroName]);
+      //return tooltip.style("hidden", false).html(d.properties.BoroName);
   }
     
   function mouseout(d){
@@ -235,6 +266,9 @@ function drawNYCMap(serverdata){
         .style('opacity', 0)
         .remove();
     
+
+        var tooltip = d3.select("div.tooltip");
+        tooltip.classed("hidden", true);
       // Clear province name
       bigText.text('');
   }
@@ -292,39 +326,29 @@ function drawNYCMap(serverdata){
       .duration(750)
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
       //console.log("server data is", serverdata)
-    
-   
-    
+      
+  }   
+        domainList = [  ]
+       for(key in boroughMap){
+         domainList.push(boroughMap[key])
+       }
+       console.log(domainList)
+       domainList.sort(function(a, b) {
+               return a - b;})
+       console.log(domainList)
 
-  }  
 
-      // var svg2 = d3.select("#mid-top")
-      //   .append("svg")
-      //   .attr("id","svg-mt")
-      //   .attr("width", "100%")
-      //   .attr("height", "100%")
-      //   .style("background-color", "#fff")
-      //   .append("g")
-        //.attr("transform", "translate(130,130)")
         var data = d3.map();
         var colorScale = d3.scaleThreshold()
-  .domain([0,100,200,300,400,500,600,700,1000])
-  .range(d3.schemeBlues[7]);
+                          //.domain([0,100,200,300,400,500,600,700,1000])
+                          .domain(domainList)
+                          .range(d3.schemeBlues[7]);
         d3.queue()
         .defer(d3.json, "/static/json/nyc.geojson")
         .defer(d3.csv, "/static/json/borough_freq_2020.csv", function(d) { data.set(d.neighbourhood_group_cleansed, +d.count); })
         .await(ready);
-//   d3.csv("/Data/listings_2019.csv", 
-//         function(data){
-//           for (var i = 0; i < data.length; i++) {
-//             console.log(data[i]);
-        
-//         }
-// });
 
-//d3.csv('/static/json/borough_freq_2020.csv', function(error, temp){  console.log(temp)});
 
-     // d3.json('/static/json/nyc.geojson', function(mapData) {
      function ready(error, mapData){
        if(error){console.log(error);}
            console.log(mapData)
@@ -343,8 +367,9 @@ function drawNYCMap(serverdata){
               .attr('vector-effect', 'non-scaling-stroke')
               .attr('fill', function(d){
                 // /console.log("data is", serverdata);'
-                console.log(d)
-                d.total = data.get(d.properties.BoroName) || 0;
+                //console.log(d)
+                //d.total = data.get(d.properties.BoroName) || 0;
+                d.total = boroughMap[d.properties.BoroName] || 0; 
                 console.log(d.total)
                 return colorScale(d.total);
               })

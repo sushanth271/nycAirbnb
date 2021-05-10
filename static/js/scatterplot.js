@@ -151,6 +151,7 @@ function drawScatterPlotv2(data){
                     drawPCP(d_brushed)
                     drawlinev2(d_brushed)
                     drawBorough(d_brushed)
+                    drawNYCMap(d_brushed)
                     // boroughMap = {}
                     // boroughCountList = []
                     // for( i = 0; i < d_brushed.length; i++){
@@ -223,6 +224,7 @@ function drawScatterPlotv2(data){
                 getLine(data);
                 getpcpData(data);
                 getBorough(data);
+                drawNYCMap(data);
               }
        // });
 
