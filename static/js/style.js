@@ -64,9 +64,10 @@ d3.select("#mid-top")
 
 
 d3.select("#mid-bottom")
-.style("width","97%")
-.style("height","49%")
-.style("margin-bottom","2%")
+.style("width","100%")
+.style("height","45%")
+.style("margin-top","1.5%")
+.style("background-color","#252322")
 
 
 d3.select("#right-top")
