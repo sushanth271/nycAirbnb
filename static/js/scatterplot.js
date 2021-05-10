@@ -18,8 +18,8 @@ function drawScatterPlotv2(data){
     // console.log("Scatter data", data)
     d3.select('#right-bottom').select('svg').remove()
     var margin = {top: 20, right: 0, bottom: 50, left: 85},
-            svg_dx = 500, 
-            svg_dy = 400,
+            svg_dx = 700, 
+            svg_dy = 450,
             plot_dx = svg_dx - margin.right - margin.left,
             plot_dy = svg_dy - margin.top - margin.bottom;
 

@@ -15,8 +15,8 @@ function drawlinev2(data){
   d3.select('#right-top').select('svg').remove()
       // set the dimensions and margins of the graph
       var margin = {top: 10, right: 30, bottom: 30, left: 60},
-      width = 460 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      width = 560 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
       var lines =[];
       var i = 0
@@ -195,7 +195,10 @@ function drawlinev2(data){
 
       // Here extent is null try using a else loop
       if (extent != null){
-      for(i = parseInt(extent[0]); i < parseInt(extent[1])+1; i++){
+        // console.log("extent is",  extent)
+        // console.log(x.invert(extent[0]), x.invert(extent[1]) )
+        // // x.domain([extent[0], extent[1]])
+      for(i = parseInt(x.invert(extent[0])); i < parseInt(x.invert(extent[1]))+1; i++){
         // console.log(i)
         if(i<366){
         for( j = 0; j < availability_properties_map[i].length; j++){

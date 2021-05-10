@@ -174,13 +174,15 @@ function drawPCP(data){
                    .each(function(d) {
                                  actives.push({
                                  dimension: d,
-                                 extent: d3.brushSelection(this)
+                                 extent: d3.brushSelection(this),
+                                //  console.log(d)
                              });
                            });
-                //console.log("actives is ", actives)
+                // console.log("actives is ", actives)
                 foreground.style('display', function(d) {
                                  return actives.every(function(active) {
                                          const dim = active.dimension;
+                                        //  console.log(dim)
                                          //console.log(active.extent[0] <= y[dim](d[dim]) && y[dim](d[dim]) <= active.extent[1])
                                          return active.extent[0] <= y[dim](d[dim]) && y[dim](d[dim]) <= active.extent[1];
                              }) ? null : 'none';

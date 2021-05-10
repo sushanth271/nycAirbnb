@@ -64,7 +64,7 @@ var svg = d3.select("#left-top")
     .attr("transform", "translate(50,20)")
   .append("g")
     .attr("transform",
-          "translate(" + 100 + "," + 0 + ")");
+    "translate(" + margin.left + ")");
 
 
             // Add X axis
@@ -93,11 +93,12 @@ svg.append("g")
   .range([ 0, height ])
   .domain(sortedLocalities.map(function(d) { return d.Borough; }))
   .padding(.1);
-svg.append("g")
-  .call(d3.axisLeft(y))
-  .style("font-size", 15) 
-      .attr("class", "axisColor")
-      .attr("stroke", "white")
+// svg.append("g")
+//   .call(d3.axisLeft(y))
+//   .select(".domain").remove()
+  // .style("font-size", 15) 
+  //     .attr("class", "axisColor")
+  //     .attr("stroke", "white")
       
 
     //Bars
@@ -152,6 +153,17 @@ svg.append("g")
     .attr("width", function(d) { return x(d.value); })
     .attr("height", y.bandwidth() )
     .attr("fill", "steelblue")
+
+    svg.selectAll("myRect")
+    .data(sortedLocalities)
+    .enter()
+    .append("text")
+    .attr("x", x(0) )
+    .attr("y", function(d) { return y(d.Borough); })
+    .attr("dy", "1em")
+    .text(function(d) { return d.Borough; })
+    .style("fill","white");
+
 
 
     
