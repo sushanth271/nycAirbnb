@@ -14,7 +14,7 @@ getLine()
 function drawlinev2(data){
   d3.select('#right-top').select('svg').remove()
       // set the dimensions and margins of the graph
-      var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      var margin = {top: 10, right: 30, bottom: 50, left: 60},
       width = 560 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
@@ -59,7 +59,7 @@ function drawlinev2(data){
     .attr("height", height + margin.top + margin.bottom)
     .attr("transform", "translate(50,20)")
     .append("g")
-    .attr("transform", "translate(" + margin.left + ")");
+    .attr("transform", "translate(" + margin.left + ",10)");
 
     //Read the data
    // d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
