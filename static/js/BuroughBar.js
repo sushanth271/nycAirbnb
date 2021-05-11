@@ -87,10 +87,9 @@ svg.append("g")
                    .attr("font-size", "15px")
                    .attr("fill", "white")
                    .text("Properties");;
-
      // Y axis
   var y = d3.scaleBand()
-  .range([ 0, height ])
+  .range([ 0, (height/20)*sortedLocalities.length ])
   .domain(sortedLocalities.map(function(d) { return d.Borough; }))
   .padding(.1);
 // svg.append("g")
@@ -153,9 +152,10 @@ svg.append("g")
     .duration(300)
     .attr("y", function(d) { return y(d.Borough); })
     .attr("width", function(d) { return x(d.value); })
-    .attr("height", y.bandwidth() )
+    .attr("height",y.bandwidth())
     .attr("fill", "steelblue")
-
+                
+    // console.log(y.bandwidth())
     svg.selectAll("myRect")
     .data(sortedLocalities)
     .enter()
@@ -200,6 +200,7 @@ svg.append("g")
     }
     })
     .attr("x", x(0) )
+    //.attr("y", function(d) { return y(d.Borough); })
     .attr("y", function(d) { return y(d.Borough); })
     .attr("dy", "1em")
     .text(function(d) { return d.Borough; })
