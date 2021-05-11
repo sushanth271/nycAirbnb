@@ -178,6 +178,8 @@ function brush() {
                 extent: d3.brushSelection(this)
             });
         });
+
+        console.log(actives)
     //set un-brushed foreground line disappear
     foreground.classed("fade", function(d,i) {
 

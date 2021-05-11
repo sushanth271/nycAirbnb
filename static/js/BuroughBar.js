@@ -140,11 +140,13 @@ svg.append("g")
                     drawScatterPlotv2(filteredData)
                     drawPCP(filteredData)
                     drawlinev2(filteredData)
+                    drawNYCMap(filteredData)
                   }
                   else{
                     drawScatterPlotv2(data)
                     drawPCP(data)
                     drawlinev2(data)
+                    drawNYCMap(data)
                   }
                   })
     .transition()
@@ -158,6 +160,45 @@ svg.append("g")
     .data(sortedLocalities)
     .enter()
     .append("text")
+    .attr("class","textpointer")
+    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 1x5 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
+    .on("mouseout",  function(d){  d3.select("#hovertext").remove();  })
+    .on("click",function(d){
+                    
+      if (selectedList.includes(d.Borough)){
+        d3.select(this).style("fill","steelblue")
+        console.log("it is in selected so remove from list");
+        var index = selectedList.indexOf(d.Borough)
+        selectedList.splice(index,1);
+      }
+      else{
+        selectedList.push(d.Borough);
+        d3.select(this).style("fill","green");
+      }
+        console.log(selectedList)
+        // d3.select(this).style("fill","green");
+
+        filteredData = []
+        for( i = 0 ; i< data.length; i++){
+          for(j=0; j<selectedList.length;j++)
+        if(data[i]["locality"] == selectedList[j]){
+          filteredData.push(data[i])
+      }
+    }
+    console.log(filteredData)
+    if (selectedList.length>0){
+      drawScatterPlotv2(filteredData)
+      drawPCP(filteredData)
+      drawlinev2(filteredData)
+      drawNYCMap(filteredData)
+    }
+    else{
+      drawScatterPlotv2(data)
+      drawPCP(data)
+      drawlinev2(data)
+      drawNYCMap(data)
+    }
+    })
     .attr("x", x(0) )
     .attr("y", function(d) { return y(d.Borough); })
     .attr("dy", "1em")
@@ -167,7 +208,7 @@ svg.append("g")
 
 
     
-    // console.log("AT LAST",selectedList);
+    
 }
 
 // function drawBoroughBarOld(data){
