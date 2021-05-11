@@ -13,11 +13,11 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
+#data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
 
 year = 2019
 
-# data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
 
 
 
@@ -52,14 +52,14 @@ def getYear():
     global data2021
     year = request.form.get('year')
     if(year == "2019"):
-        data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
-        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2019_stratified.csv")
+        #data2021 = pd.read_csv("Data\listings_2019_stratified.csv")
+        data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2019_stratified.csv")
     elif (year == "2020"):
-        data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
-        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
+        #data2021 = pd.read_csv("Data\listings_2020_stratified.csv")
+        data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2020_stratified.csv")
     elif (year == "2021"):
-        data2021 = pd.read_csv("Data\listings_2021_stratified.csv")
-        # data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2021_stratified.csv")
+        #data2021 = pd.read_csv("Data\listings_2021_stratified.csv")
+        data2021 = pd.read_csv("C:\\Users\\madhu\\listings_2021_stratified.csv")
 
     # print(type(year))
     return "SUCCESS"
@@ -216,10 +216,11 @@ def sendPcpData():
     dataBathRooms = data2021['bathrooms']
     dataBedRooms = data2021['bedrooms']
     dataAccomodates = data2021['accommodates']
+    dataLocality = data2021['neighbourhood_cleansed']
     dataAvail = data2021['availability_365']
     for i in range(len(dataIds)):
         #tempDict = {'id':int(dataIds[i]), 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) }
-        tempDict = { 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) }
+        tempDict = { 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) , 'locality': dataLocality[i] }
         pcpData.append(tempDict)
     return jsonify(pcpData)
 

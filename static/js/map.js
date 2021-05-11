@@ -44,10 +44,10 @@ function drawNYCMap(serverdata){
     .range(['#fff', '#409A99']);
 
   var projection = d3.geoMercator()
-    .scale(45000)
+    .scale(55000)
     // Center the Map in Colombia
     .center([-73.935242, 40.730610])
-    .translate([width / 1.2, height / 2.7]);
+    .translate([width +100 , height / 2.7]);
 
   var path = d3.geoPath()
     .projection(projection);
@@ -283,7 +283,7 @@ function drawNYCMap(serverdata){
     // Compute centroid of the selected path
     if (d && centered !== d) {
       var centroid = path.centroid(d);
-      x = centroid[0];
+      x = centroid[0]-100;
       y = centroid[1];
       k = 4;
       centered = d;
