@@ -246,7 +246,7 @@ function drawlinev2(data){
       getBorough(data);
       getpcpData(data);
       getLine(data);
-      drawNYCMap(data);
+      getMap(data);
 
       // console.log("extent",extent)
     }

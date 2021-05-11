@@ -110,7 +110,7 @@ svg.append("g")
     
     // .on("mouseover",  function(d){ d3.select(this).style("fill","#900C3F"); d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
     // .on("mouseout",  function(d){ d3.select(this).style("fill","steelblue "); d3.select("#hovertext").remove();  })
-    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
+    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  width - 20 ).attr("y", y(d.Borough) + y.bandwidth()/2 ).text(d.value).attr("id","hovertext").attr("fill", "white") })
     .on("mouseout",  function(d){  d3.select("#hovertext").remove();  })
     .on("click",function(d){
                     
@@ -161,7 +161,7 @@ svg.append("g")
     .enter()
     .append("text")
     .attr("class","textpointer")
-    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 1x5 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
+    .on("mouseover",  function(d){  d3.select(this.parentNode).append("text").attr("x",  x(d.value) + 15 ).attr("y", y(d.Borough) + (height)/(topCount*2) ).text(d.value).attr("id","hovertext").attr("fill", "white") })
     .on("mouseout",  function(d){  d3.select("#hovertext").remove();  })
     .on("click",function(d){
                     

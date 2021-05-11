@@ -224,7 +224,7 @@ function drawScatterPlotv2(data){
                 getLine(data);
                 getpcpData(data);
                 getBorough(data);
-                drawNYCMap(data);
+                getMap(data);
               }
        // });
 
