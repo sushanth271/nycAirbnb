@@ -244,7 +244,7 @@ function drawNYCMap(serverdata){
       .style("top", (d3.event.pageY) + "px")
       .style("left", (d3.event.pageX + 10) + "px")
                        //.html(d.properties.BoroName + ":" +data["$"+d.properties.BoroName]);
-                       .html(d.properties.BoroName + ":" + boroughMap[d.properties.BoroName]);
+                       .html("<p style='color:red'>" + d.properties.BoroName  + ":" + boroughMap[d.properties.BoroName] + "</p>");
       //return tooltip.style("hidden", false).html(d.properties.BoroName);
   }
     
@@ -276,10 +276,13 @@ function drawNYCMap(serverdata){
   // When clicked, zoom in
   function clicked(d) {
     // console.log("cliked zoom in")
+    console.log(d)
     // console.log("d in click event is", nameFn(d))
     // console.log("here")
     var x, y, k;
-  
+    
+    console.log("centered is",centered)
+    console.log("d is", d)
     // Compute centroid of the selected path
     if (d && centered !== d) {
       var centroid = path.centroid(d);
@@ -295,6 +298,33 @@ function drawNYCMap(serverdata){
         filteredData.push(serverdata[i])
       }
     }
+    //console.log(svg.selectAll(".pin"))
+    //d3.selectAll("#mapLoc").remove();
+    
+
+    // var places = [
+    //   {
+    //     name: "Wollongong, Australia",
+    //     location: {
+    //       latitude: 40.66736535347607,
+    //       longitude:-73.87551478788605
+    //     }
+    //   }
+    // ]
+    // svg.selectAll(".pin")
+    // .data(places)
+    // .enter().append("circle", ".pin")
+    // .attr("r", 700)
+    // .attr("transform", function(d) {
+    //   test = projection([
+    //     d.location.longitude,
+    //     d.location.latitude ])
+    //     console.log(test)
+    //     return "translate(" + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + "-"+test[1] + ',' + "-"+ test[0] + ')';
+
+    // });
+
+
     isBoroughClicked = true
     //console.log("filtered data is ", filteredData)
     drawScatterPlotv2(filteredData);
@@ -316,13 +346,31 @@ function drawNYCMap(serverdata){
       drawPie(serverdata)
       isBoroughClicked = false
       
+      // svg.selectAll(".pin")
+      //  //.data(places)
+      //   .data(serverdata)
+      //   .enter().append("circle", ".pin")
+      //   .attr("id","mapLoc")
+      //   .attr("r", 1.75)
+      //   .attr("opacity", 0.5)
+      //   .attr("transform", function(d) {
+      //     console.log(d.latitude, d.longitude)
+      //     return "translate(" + projection([
+      //       //d.location.longitude,
+      //       d.longitude,
+      //       d.latitude
+      //       //d.location.latitude
+      //     ]) + ")";
+      //   });
       
     }
   
     // Highlight the clicked province
     //mapLayer.selectAll('path')
       //.style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
-  
+      
+
+
     // Zoom
     g.transition()
       .duration(750)
@@ -350,6 +398,41 @@ function drawNYCMap(serverdata){
         .defer(d3.csv, "/static/json/borough_freq_2020.csv", function(d) { data.set(d.neighbourhood_group_cleansed, +d.count); })
         .await(ready);
 
+        var places = [
+          {
+            name: "Wollongong, Australia",
+            location: {
+              latitude: 40.66736535347607,
+              longitude:-73.87551478788605
+            }
+          },
+          {
+            name: "Newcastle, Australia",
+            location: {
+              latitude: -32.92669,
+              longitude: 151.77892
+            }
+          }
+        ]
+        d3.selectAll("#mapLoc").remove();
+        g.selectAll(".pin")
+       //.data(places)
+        .data(serverdata)
+        .enter().append("circle", ".pin")
+        .attr("id","mapLoc")
+        .attr("r", 1.75)
+        .attr("opacity", 0.5)
+        .attr("transform", function(d) {
+          console.log(d.latitude, d.longitude)
+          return "translate(" + projection([
+            //d.location.longitude,
+            d.longitude,
+            d.latitude
+            //d.location.latitude
+          ]) + ")";
+        });
+
+       
 
      function ready(error, mapData){
        if(error){console.log(error);}

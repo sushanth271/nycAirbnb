@@ -62,7 +62,7 @@ function drawPie(data){
     res = []
     for(i = 0; i < boroughs.length; i++){
             res.push(...getRandomPlaces(touristPlaces[boroughs[i]], inputData[boroughs[i]]))
-            // console.log(res)
+            //console.log(res)
     }
     var myWords = []
     for(i = 0 ; i < res.length; i++){
