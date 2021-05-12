@@ -20,6 +20,14 @@ function drawNYCMap(serverdata){
      "Queens":0,
      "Staten Island":0
    }
+
+   boroughPriceMap = {
+    "Bronx":0,
+    "Brooklyn":0,
+    "Manhattan":0,
+    "Queens":0,
+    "Staten Island":0
+  }
      
       for( i = 0; i < serverdata.length; i++){
           // if( !( serverdata[i]['borough'] in boroughMap))
@@ -28,10 +36,11 @@ function drawNYCMap(serverdata){
           // }
           // else{
               boroughMap[serverdata[i]['borough']]++
+              boroughPriceMap[serverdata[i]['borough']] += serverdata[i]['price']
           //}
       }
       
-      // console.log("boroughMap is", boroughMap)
+      // /console.log("boroughMap is", boroughMap)
 
   var width = 500,
   height = 650,
@@ -244,7 +253,7 @@ function drawNYCMap(serverdata){
       .style("top", (d3.event.pageY) + "px")
       .style("left", (d3.event.pageX + 10) + "px")
                        //.html(d.properties.BoroName + ":" +data["$"+d.properties.BoroName]);
-                       .html("<p style='color:red'>" + d.properties.BoroName  + ":" + boroughMap[d.properties.BoroName] + "</p>");
+                       .html("<p style='color:red' class='inline' >" + d.properties.BoroName  + ":</p>" + boroughMap[d.properties.BoroName] + "<br><p  style='color:red' class='inline'> Average Price:</p><p  class='inline'>$"  + parseInt(boroughPriceMap[d.properties.BoroName]/boroughMap[d.properties.BoroName]) + "</p>");
       //return tooltip.style("hidden", false).html(d.properties.BoroName);
   }
     
@@ -420,10 +429,11 @@ function drawNYCMap(serverdata){
         .data(serverdata)
         .enter().append("circle", ".pin")
         .attr("id","mapLoc")
+        .attr("class","textpointer")
         .attr("r", 1.75)
         .attr("opacity", 0.5)
         .attr("transform", function(d) {
-          console.log(d.latitude, d.longitude)
+          // console.log(d.latitude, d.longitude)
           return "translate(" + projection([
             //d.location.longitude,
             d.longitude,
