@@ -126,30 +126,13 @@ def sendPie():
     # borough['Staten Island']=mylist.count("Staten Island")
     # return jsonify(borough)
     pieData = []
-    data1 = []
-    data2 = []
+    pieData = getUniversalData(data2021, pieData)
     unique = data2021['bathrooms'].unique().tolist()
     # print(unique)
     unique.sort()
     mylist=data2021['bathrooms'].tolist()
-    pieData = []
-    for i in range(len(unique)):
-        tempDict={'Bathroom': unique[i], 'value': int(mylist.count(unique[i]))}
-        data1.append(tempDict)
-    unique = data2021['bedrooms'].unique().tolist()
-    # print(unique)
-    unique.sort()
-    mylist=data2021['bedrooms'].tolist()
-    pieData = []
-    for i in range(len(unique)):
-        tempDict={'bedrooms': unique[i], 'value': int(mylist.count(unique[i]))}
-        data2.append(tempDict)
-    pieData.append(data1)
-    pieData.append(data2)
-    return jsonify(pieData)
-    
-    # return jsonify(pieData)
-    return ""
+    return pieData
+
 
 
 

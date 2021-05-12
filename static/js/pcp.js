@@ -18,7 +18,7 @@ function drawPCP(data){
         y = {};
     dragging = {};
 
-    var line = d3.line(),
+    var line = d3.line().curve(d3.curveCardinal),
         axis = d3.axisLeft(),
         background,
         foreground;
@@ -236,6 +236,7 @@ function brush() {
         drawBorough(selectedlist)
         drawlinev2(selectedlist)
         drawNYCMap(selectedlist)
+        drawPie(selectedlist)
     
         }
 

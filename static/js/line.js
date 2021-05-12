@@ -146,6 +146,7 @@ function drawlinev2(data){
       .attr("d", d3.line()
         .x(function(d,i) {  return x(i) })
         .y(function(d) {  return y(d) })
+        .curve(d3.curveCardinal)
         
         )
         
