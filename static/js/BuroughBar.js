@@ -124,7 +124,7 @@ svg.append("g")
                       selectedList.push(d.Borough);
                       d3.select(this).style("fill","green");
                     }
-                      console.log(selectedList)
+                      // console.log(selectedList)
                       // d3.select(this).style("fill","green");
 
                       filteredData = []
@@ -140,12 +140,14 @@ svg.append("g")
                     drawPCP(filteredData)
                     drawlinev2(filteredData)
                     drawNYCMap(filteredData)
+                    drawPie(filteredData)
                   }
                   else{
                     drawScatterPlotv2(data)
                     drawPCP(data)
                     drawlinev2(data)
                     drawNYCMap(data)
+                    drawPie(data)
                   }
                   })
     .transition()

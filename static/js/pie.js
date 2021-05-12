@@ -29,8 +29,8 @@ function drawPie(data){
 
         return listOfPlaces.slice(0,num);
     }
-    console.log(data.length)
-    console.log(data)
+    // console.log(data.length)
+    // console.log(data)
     var inputData = {"Manhattan":0,
                          "Brooklyn":0,
                         "Bronx":0,
@@ -40,7 +40,7 @@ function drawPie(data){
     for(i=0;i<data.length;i++){
         inputData[data[i]["borough"]]++
     }
-    console.log(inputData)
+    // console.log(inputData)
 
     number_of_words = 12
 
@@ -49,7 +49,7 @@ function drawPie(data){
             inputData[boroughs[i]] = Math.ceil((inputData[boroughs[i]]*number_of_words)/data.length)
     }
 
-    console.log(inputData)
+    // console.log(inputData)
 
     
     
@@ -62,7 +62,7 @@ function drawPie(data){
     res = []
     for(i = 0; i < boroughs.length; i++){
             res.push(...getRandomPlaces(touristPlaces[boroughs[i]], inputData[boroughs[i]]))
-            console.log(res)
+            // console.log(res)
     }
     var myWords = []
     for(i = 0 ; i < res.length; i++){
@@ -73,7 +73,7 @@ function drawPie(data){
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 425 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#left-bottom").append("svg")
@@ -110,7 +110,16 @@ function draw(words) {
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text(function(d) { return d.text; });
+        .text(function(d) { return d.text; })
+        .on("mouseover", function(d){
+          d3.select(this).style("cursor", "pointer"); 
+        })
+        .on("click", function(d){
+          var str1 = "https://www.google.com/search?q="
+          var str2 = d.text
+          var res = str1.concat(str2)
+          window.open(res, "_blank");
+        });
     }
 }
 

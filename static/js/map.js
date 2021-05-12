@@ -10,7 +10,7 @@ function getMap(){
 getMap()
 
 function drawNYCMap(serverdata){
-  console.log("Data is", serverdata)
+  // console.log("Data is", serverdata)
 
   // /boroughCountMap = {}
    boroughMap = {
@@ -31,7 +31,7 @@ function drawNYCMap(serverdata){
           //}
       }
       
-      console.log("boroughMap is", boroughMap)
+      // console.log("boroughMap is", boroughMap)
 
   var width = 500,
   height = 650,
@@ -189,7 +189,7 @@ function drawNYCMap(serverdata){
       yPtr += textHeight + yGap;
     }
     
-    console.log("text is", text)
+    // console.log("text is", text)
     var selection = effectLayer.selectAll('text')
       .data(positions, function(d){return d.text+'/'+d.index;});
   
@@ -237,7 +237,7 @@ function drawNYCMap(serverdata){
       .style("stroke", "black")
       var tooltip = d3.select("div.toolTip");
 
-      console.log(d.properties.BoroName)
+      // console.log(d.properties.BoroName)
       // Draw effects
       textArt(nameFn(d));
       tooltip.classed("hidden", false)
@@ -275,7 +275,7 @@ function drawNYCMap(serverdata){
   
   // When clicked, zoom in
   function clicked(d) {
-    console.log("cliked zoom in")
+    // console.log("cliked zoom in")
     // console.log("d in click event is", nameFn(d))
     // console.log("here")
     var x, y, k;
@@ -287,7 +287,7 @@ function drawNYCMap(serverdata){
       y = centroid[1];
       k = 4;
       centered = d;
-      console.log("zooming in")
+      // console.log("zooming in")
       
       filteredData = []
     for( i = 0 ; i< serverdata.length; i++){
@@ -301,17 +301,19 @@ function drawNYCMap(serverdata){
     drawlinev2(filteredData);
     drawPCP(filteredData);
     drawBorough(filteredData);
+    drawPie(filteredData)
     
     } else {
       x = width / 2;
       y = height / 2;
       k = 1;
       centered = null;
-      console.log("server data is", serverdata)
+      // console.log("server data is", serverdata)
       drawScatterPlotv2(serverdata)
       drawlinev2(serverdata);
       drawPCP(serverdata);
       drawBorough(serverdata)
+      drawPie(serverdata)
       isBoroughClicked = false
       
       
@@ -332,10 +334,10 @@ function drawNYCMap(serverdata){
        for(key in boroughMap){
          domainList.push(boroughMap[key])
        }
-       console.log(domainList)
+      //  console.log(domainList)
        domainList.sort(function(a, b) {
                return a - b;})
-       console.log(domainList)
+      //  console.log(domainList)
 
 
         var data = d3.map();
@@ -351,7 +353,7 @@ function drawNYCMap(serverdata){
 
      function ready(error, mapData){
        if(error){console.log(error);}
-           console.log(mapData)
+          //  console.log(mapData)
           // console.log(serverdata)
           var features = mapData.features;
           
@@ -370,7 +372,7 @@ function drawNYCMap(serverdata){
                 //console.log(d)
                 //d.total = data.get(d.properties.BoroName) || 0;
                 d.total = boroughMap[d.properties.BoroName] || 0; 
-                console.log(d.total)
+                // console.log(d.total)
                 return colorScale(d.total);
               })
               .on('mouseover', mouseover)

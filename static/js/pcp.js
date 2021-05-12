@@ -10,9 +10,9 @@ function getpcpData(){
 function drawPCP(data){
     d3.select('#mid-bottom').select('svg').remove()
    
-    var margin = {top: 20, right: 0, bottom: 50, left: 0},
+    var margin = {top: 20, right: 0, bottom: 70, left: 0},
     width = 1200 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+    height = 410 - margin.top - margin.bottom;
 
     var x = d3.scalePoint().range([ 0, width ]).padding(1)  //d3.scale.ordinal().rangePoints([0, width], 1),
         y = {};
@@ -25,7 +25,7 @@ function drawPCP(data){
 
     var svg = d3.select("#mid-bottom").append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom )
     .append("g")
         .attr("transform", "translate(-50,50)");//  + "," + margin.top + ")");
 
@@ -159,7 +159,7 @@ return line(dimensions.map(function(p) { return [position(p), y[p](d[p])]; }));
 
 
 function brushstart() {
-  console.log("brush started")
+  // console.log("brush started")
   d3.event.sourceEvent.stopPropagation();
 }
 
@@ -167,7 +167,7 @@ function brushstart() {
 
 // Handles a brush event, toggling the display of foreground lines.
 function brush() {
-  console.log("brushing")
+  // console.log("brushing")
     var actives = [];
     //filter brushed extents
     svg.selectAll(".brush")
@@ -181,7 +181,7 @@ function brush() {
             });
         });
 
-        console.log(actives)
+        // console.log(actives)
     //set un-brushed foreground line disappear
     foreground.classed("fade", function(d,i) {
 
@@ -194,7 +194,7 @@ function brush() {
 
     }
     function brushend() {
-      console.log("brush ended")
+      // console.log("brush ended")
         var actives = [];
         //filter brushed extents
         svg.selectAll(".brush")
@@ -229,7 +229,7 @@ function brush() {
         //path != fade or path == "" --> selected
         selectedlist = []
         d3.selectAll(".notfaded").each(function(d){selectedlist.push(d)})
-        console.log(selectedlist)
+        // console.log(selectedlist)
         //console.log(test)
 
         drawScatterPlotv2(selectedlist)

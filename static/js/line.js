@@ -95,7 +95,7 @@ function drawlinev2(data){
 
     // Add Y axis
     var y = d3.scaleLinear()
-      .domain([0, d3.max(lines, function(d) { return d; })])
+      .domain([0, d3.max(lines, function(d) { return d; })+6])
       .range([ height, 0 ]);
 
     yAxis = svg.append("g")
@@ -192,7 +192,7 @@ function drawlinev2(data){
       //     )
 
       sendData = []
-      console.log("extent is", extent)
+      // console.log("extent is", extent)
 
       // Here extent is null try using a else loop
       if (extent != null){
@@ -207,11 +207,12 @@ function drawlinev2(data){
         }
       }
       }
-      console.log("senddata is", sendData)
+      // console.log("senddata is", sendData)
       drawPCP(sendData)
       drawScatterPlotv2(sendData)
       drawBorough(sendData)
       drawNYCMap(sendData)
+      drawPie(sendData)
       //sending data from line chart to bar chart
       // console.log("DATA IS", sendData)
       // d_brushed=sendData
@@ -248,6 +249,7 @@ function drawlinev2(data){
       getpcpData(data);
       getLine(data);
       getMap(data);
+      getPie(data);
 
       // console.log("extent",extent)
     }

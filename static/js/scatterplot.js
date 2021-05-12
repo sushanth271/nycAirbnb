@@ -42,8 +42,8 @@ function drawScatterPlotv2(data){
             x.domain(d_extent_x);
             //x.domain([0,500])
             //y.domain([50,100])
-           y.domain(d_extent_y);
-           // y.domain([50,100]);
+        //    y.domain(d_extent_y);
+           y.domain([0,10]);
 
             var axis_x = d3.axisBottom(x)
                            //.tickFormat(formatIncome),
@@ -152,6 +152,7 @@ function drawScatterPlotv2(data){
                     drawlinev2(d_brushed)
                     drawBorough(d_brushed)
                     drawNYCMap(d_brushed)
+                    drawPie(d_brushed)
                     // boroughMap = {}
                     // boroughCountList = []
                     // for( i = 0; i < d_brushed.length; i++){
@@ -225,6 +226,7 @@ function drawScatterPlotv2(data){
                 getpcpData(data);
                 getBorough(data);
                 getMap(data);
+                getPie(data);
               }
        // });
 
