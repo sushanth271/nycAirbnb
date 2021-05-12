@@ -44,6 +44,12 @@ d3.select("#left-top")
 	.style("margin-bottom","2%")
 	.style("background-color","#252322")
 
+d3.select("#left-top-heading")
+	.style("width","100%")
+	.style("height","5%")
+	// .style("margin-bottom","2%")
+	// .style("background-color","#AEC0C9")
+
 	
 
 d3.select("#left-bottom")
@@ -61,6 +67,14 @@ d3.select("#mid-top")
 	//.style("margin-bottom","2%")
 	.style("background-color","#252322")
 
+d3.select("#mid-top-heading")
+	.style("width","100%")
+	.style("height","2%")
+	// .style("margin-bottom","2%")
+	// .style("background-color","#AEC0C9")
+
+
+
 
 
 d3.select("#mid-bottom")
@@ -69,12 +83,24 @@ d3.select("#mid-bottom")
 .style("margin-top","1.5%")
 .style("background-color","#252322")
 
+d3.select("#mid-bottom-heading")
+.style("width","100%")
+.style("height","5%")
+// .style("margin-bottom","2%")
+// .style("background-color","#AEC0C9")
+
 
 d3.select("#right-top")
 .style("width","100%")
 .style("height","55%")
 .style("margin-bottom","2%")
 .style("background-color","#252322")
+
+d3.select("#right-top-heading")
+.style("width","100%")
+.style("height","5%")
+// .style("margin-bottom","2%")
+// .style("background-color","#AEC0C9")
 
 
 
@@ -83,5 +109,11 @@ d3.select("#right-bottom")
 .style("height","45%")
 .style("margin-bottom","3%")
 .style("background-color","#252322")
+
+d3.select("#right-bottom-heading")
+.style("width","100%")
+.style("height","5%")
+// .style("margin-bottom","2%")
+// .style("background-color","#AEC0C9")
 
 

@@ -88,7 +88,7 @@ function drawlinev2(data){
                    .attr("x", 200)
                    .style('font-family', "Lucida Console")
                    .style('font-weight', '600')
-                   .attr("opacity", 0.7)
+                  //  .attr("opacity", 0.7)
                    .attr("font-size", "15px")
                    .attr("fill", "white")
                    .text("Availability");
@@ -111,7 +111,7 @@ function drawlinev2(data){
                       .attr("fill", "white")
                       .style('font-family', "Lucida Console")
                       .style('font-weight', '600')
-                      .attr("opacity", 0.7)
+                      // .attr("opacity", 0.7)
                       .text("Properties");;
     // // Add a clipPath: everything out of this area won't be drawn.
     var clip = svg.append("defs").append("svg:clipPath")

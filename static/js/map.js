@@ -44,7 +44,7 @@ function drawNYCMap(serverdata){
     .range(['#fff', '#409A99']);
 
   var projection = d3.geoMercator()
-    .scale(55000)
+    .scale(45500)
     // Center the Map in Colombia
     .center([-73.935242, 40.730610])
     .translate([width +100 , height / 2.7]);
@@ -56,7 +56,7 @@ function drawNYCMap(serverdata){
   var svg = d3.select("#mid-top")
     .append('svg')
     .attr('width', '100%')
-    .attr('height', '100%')
+    .attr('height', '90%')
     .style( "background-color", "#252322");
     //.attr("viewbox", '0 0 100% 100%');
 
