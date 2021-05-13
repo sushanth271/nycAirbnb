@@ -258,7 +258,7 @@ function drawNYCMap(serverdata){
       .style("top", (d3.event.pageY) + "px")
       .style("left", (d3.event.pageX + 10) + "px")
                        //.html(d.properties.BoroName + ":" +data["$"+d.properties.BoroName]);
-                       .html("<p style='color:red' class='inline' >" + d.properties.BoroName  + ":</p>" + boroughMap[d.properties.BoroName] + "<br><p  style='color:red' class='inline'> Average Price:</p><p  class='inline'>$"  + parseInt(boroughPriceMap[d.properties.BoroName]/boroughMap[d.properties.BoroName]) + "</p>");
+                       .html("<p style='color:red' class='inline' >" + d.properties.BoroName  + ":</p>" + boroughMap[d.properties.BoroName] + "<br><p  style='color:red' class='inline'> Average Price:</p>$"  + parseInt(boroughPriceMap[d.properties.BoroName]/boroughMap[d.properties.BoroName]) );
       //return tooltip.style("hidden", false).html(d.properties.BoroName);
   }
     
@@ -409,6 +409,31 @@ function drawNYCMap(serverdata){
                           //.domain([0,100,200,300,400,500,600,700,1000])
                           .domain(unique)
                           .range(d3.schemeBlues[7]);
+
+        //legend
+        var size = 20
+        g.selectAll("mydots")
+          .data(unique)
+          .enter()
+          .append("rect")
+            .attr("x", 100)
+            .attr("y", function(d,i){ console.log("Adding legend"); return 350 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+            .attr("width", size)
+            .attr("height", size)
+            .style("fill", function(d){ return colorScale(d)})
+
+        // Add one dot in the legend for each name.
+        g.selectAll("mylabels")
+          .data(unique)
+          .enter()
+          .append("text")
+            .attr("x", 100 + size*1.2)
+            .attr("y", function(d,i){ return 350 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+            .style("fill", function(d){ return color(d)})
+            .text(function(d,i){ if(i == 0){return "Low";} if(i==unique.length - 1){return "High"} })
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
+        
         d3.queue()
         .defer(d3.json, "/static/json/nyc.geojson")
         .defer(d3.csv, "/static/json/borough_freq_2020.csv", function(d) { data.set(d.neighbourhood_group_cleansed, +d.count); })
@@ -438,7 +463,7 @@ function drawNYCMap(serverdata){
         .attr("id","mapLoc")
         .attr("class","textpointer")
         .attr("r", 1.75)
-        .attr("fill","#C32727")
+        .attr("fill","#8C1E0A")
         .attr("opacity", 0.5)
         
         .attr("transform", function(d) {
