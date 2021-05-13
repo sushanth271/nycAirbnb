@@ -15,7 +15,7 @@ function drawlinev2(data){
   d3.select('#right-top').select('svg').remove()
       // set the dimensions and margins of the graph
       var margin = {top: 10, right: 30, bottom: 50, left: 60},
-      width = 560 - margin.left - margin.right,
+      width = 610 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
       var lines =[];
@@ -84,12 +84,12 @@ function drawlinev2(data){
       .attr("stroke", "white")
       .style("font-size", 15)
       .append("text")
-                   .attr("y", 35)   // x and y for the text relative to the graph itself.
-                   .attr("x", 200)
+                   .attr("y", 45)   // x and y for the text relative to the graph itself.
+                   .attr("x", width/2 )
                    .style('font-family', "Lucida Console")
                    .style('font-weight', '600')
                   //  .attr("opacity", 0.7)
-                   .attr("font-size", "15px")
+                   .attr("font-size", "20")
                    .attr("fill", "white")
                    .text("Availability");
 
@@ -107,7 +107,7 @@ function drawlinev2(data){
                       .attr("y", "-40")
                       .attr("x", "-50")
                       .attr("transform", "rotate(-90)")
-                      .attr("font-size", "18px")
+                      .attr("font-size", "20")
                       .attr("fill", "white")
                       .style('font-family', "Lucida Console")
                       .style('font-weight', '600')

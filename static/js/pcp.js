@@ -25,9 +25,9 @@ function drawPCP(data){
 
     var svg = d3.select("#mid-bottom").append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom )
+        .attr("height", height + margin.top + margin.bottom +10)
     .append("g")
-        .attr("transform", "translate(-50,50)");//  + "," + margin.top + ")");
+        .attr("transform", "translate(-40,55)");//  + "," + margin.top + ")");
 
         x.domain(dimensions = d3.keys( data[0] )
         .filter( function(d,i)
@@ -112,8 +112,8 @@ g.append("g")
   //.attr("fill","black")
   //.attr("font-size","110%")
   .style('font-family', "Lucida Console")
-    .style('font-weight', '600')
-    .attr("opacity", 0.7)
+    // .style('font-weight', '600')
+    // .attr("opacity", 0.7)
     .attr("font-size", "16px")
     .attr("fill", "white")
     .attr("transform", "translate(0,-10)")

@@ -18,7 +18,7 @@ function drawScatterPlotv2(data){
     // console.log("Scatter data", data)
     d3.select('#right-bottom').select('svg').remove()
     var margin = {top: 20, right: 0, bottom: 50, left: 85},
-            svg_dx = 700, 
+            svg_dx = 690, 
             svg_dy = 425,
             plot_dx = svg_dx - margin.right - margin.left,
             plot_dy = svg_dy - margin.top - margin.bottom;
@@ -30,7 +30,8 @@ function drawScatterPlotv2(data){
         var svg = d3.select("#right-bottom")
                     .append("svg")
                     .attr("width", svg_dx)
-                    .attr("height", svg_dy);
+                    .attr("height", svg_dy)
+                    .attr("transform", "translate(10,20)");
 
 
         //console.log("max is", max)
@@ -57,16 +58,17 @@ function drawScatterPlotv2(data){
                .attr("transform", "translate("+15+","+ plot_dy + ")")
                .call(axis_x)
                .attr("class", "axisColor")
+               .attr("stroke", "white")
                .style("font-size", 15)
                .append("text")
-                   .attr("y", 40)   // x and y for the text relative to the graph itself.
-                   .attr("x", 200)
-                  // .style('font-family', "Lucida Console")
-                  // .style('font-weight', '600')
-                   //   .attr("opacity", 0.7)
-                   .attr("font-size", "15px")
-                   .attr("fill", "black")
-                   .text("Price");
+                    .attr("y", 45)   // x and y for the text relative to the graph itself.
+                    .attr("x", svg_dx/2)
+                    .style('font-family', "Lucida Console")
+                    .style('font-weight', '600')
+                    //  .attr("opacity", 0.7)
+                    .attr("font-size", "20")
+                    .attr("fill", "white")
+                    .text("Price");
 
             svg.append("g")
                .attr("id", "axis_y")
@@ -86,7 +88,7 @@ function drawScatterPlotv2(data){
                       .attr("fill", "white")
                       .style('font-family', "Lucida Console")
                       .style('font-weight', '600')
-                      .attr("opacity", 0.7)
+                    //   .attr("opacity", 0.7)
                       //.attr("transform", "translate(0,-10)")
                       .text("Ratings");
 
@@ -96,7 +98,7 @@ function drawScatterPlotv2(data){
                              .data(data)
                              .enter()
                              .append("circle")
-                             .attr("r", 2)
+                             .attr("r", 2.5)
                              //.attr("cx", (d) => x(+d.price))
                              //.attr("cy", (d) => y(+d.ratings))
                              //.attr("cx", funcion(d) { console.log(d.ratings); return d.ratings;} )

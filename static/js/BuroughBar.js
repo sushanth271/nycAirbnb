@@ -53,7 +53,7 @@ function drawBorough(data){
 
   d3.select("#left-top").select("svg").remove();
     var margin = {top: 10, right: 30, bottom: 50, left: 60},
-    width = 560 - margin.left - margin.right,
+    width = 610 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -79,12 +79,12 @@ svg.append("g")
       .attr("stroke", "white")
       .style("font-size", 15)
       .append("text")
-                   .attr("y", 35)   // x and y for the text relative to the graph itself.
-                   .attr("x", 200)
+                   .attr("y", 45)   // x and y for the text relative to the graph itself.
+                   .attr("x", width/2)
                    .style('font-family', "Lucida Console")
                    .style('font-weight', '600')
-                   .attr("opacity", 0.7)
-                   .attr("font-size", "15px")
+                  //  .attr("opacity", 0.7)
+                   .attr("font-size", "20")
                    .attr("fill", "white")
                    .text("Properties");;
      // Y axis

@@ -396,11 +396,14 @@ function drawNYCMap(serverdata){
                return a - b;})
       //  console.log(domainList)
 
+      let unique = [...new Set(domainList)];
+
 
         var data = d3.map();
         var colorScale = d3.scaleThreshold()
                           //.domain([0,100,200,300,400,500,600,700,1000])
-                          .domain(domainList)
+                          // .domain(domainList)
+                          .domain(unique)
                           .range(d3.schemeBlues[7]);
         d3.queue()
         .defer(d3.json, "/static/json/nyc.geojson")
@@ -431,7 +434,9 @@ function drawNYCMap(serverdata){
         .attr("id","mapLoc")
         .attr("class","textpointer")
         .attr("r", 1.75)
+        .attr("fill","#C32727")
         .attr("opacity", 0.5)
+        
         .attr("transform", function(d) {
           // console.log(d.latitude, d.longitude)
           return "translate(" + projection([
