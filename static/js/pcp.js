@@ -34,7 +34,7 @@ function drawPCP(data){
                  {
                   // console.log("d is ",Object.keys(data[0])[i])
                   //console.log("d is here", d)
-                   if( d != "locality" && d != "latitude" && d != "longitude"){
+                   if( d != "locality" && d != "latitude" && d != "longitude" && d != "availability"){
                       if(d != "borough"){
                           return   (y[d] = d3.scaleLinear()
                                   .domain(d3.extent(data, function(p)

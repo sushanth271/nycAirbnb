@@ -178,12 +178,13 @@ def sendScatterPlotData():
     dataBorough = data2021['neighbourhood_group_cleansed']
     dataLocality = data2021['neighbourhood_cleansed']
     dataLatitude = data2021['latitude']
+    dataAccommodates = data2021['accommodates']
     dataLongitude = data2021['longitude']
     maxm =  max(data2021['review_scores_rating'])
     minm = min(data2021['review_scores_rating'])
     dataRating = 10*((data2021["review_scores_rating"] - minm)/(maxm - minm)) 
     for i in range(len(dataIds)):
-        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i] , 'locality': dataLocality[i],'latitude': dataLatitude[i], 'longitude': dataLongitude[i] }
+        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i] , 'locality': dataLocality[i],'latitude': dataLatitude[i], 'longitude': dataLongitude[i], 'accommodates': int(dataAccommodates[i]) }
         scatterData.append(tempDict)
     print(len(scatterData))
     return jsonify(scatterData)
@@ -200,14 +201,14 @@ def sendPcpData():
     dataBorough = data2021['neighbourhood_group_cleansed']
     dataBathRooms = data2021['bathrooms']
     dataBedRooms = data2021['bedrooms']
-    dataAccomodates = data2021['accommodates']
+    dataAccommodates = data2021['accommodates']
     dataLatitude = data2021['latitude']
     dataLongitude = data2021['longitude']
     dataLocality = data2021['neighbourhood_cleansed']
     dataAvail = data2021['availability_365']
     for i in range(len(dataIds)):
         #tempDict = {'id':int(dataIds[i]), 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) }
-        tempDict = { 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) , 'locality': dataLocality[i] , 'latitude': dataLatitude[i], 'longitude': dataLongitude[i] }
+        tempDict = { 'borough': str(dataBorough[i]), 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'bedrooms' : int(dataBedRooms[i]), 'bathrooms': float(dataBathRooms[i]), 'availability' : int(dataAvail[i]) , 'locality': dataLocality[i] , 'latitude': dataLatitude[i], 'longitude': dataLongitude[i] , 'accommodates': int(dataAccommodates[i])}
         pcpData.append(tempDict)
     return jsonify(pcpData)
 
@@ -224,11 +225,12 @@ def getUniversalData(data2021, lineData):
     dataLocality = data2021['neighbourhood_cleansed']
     dataLatitude = data2021['latitude']
     dataLongitude = data2021['longitude']
+    dataAccommodates = data2021['accommodates']
     maxm =  max(data2021['review_scores_rating'])
     minm = min(data2021['review_scores_rating'])
     dataRating = 10*((data2021["review_scores_rating"] - minm)/(maxm - minm)) 
     for i in range(len(dataIds)):
-        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i], 'locality': dataLocality[i], 'latitude': dataLatitude[i], 'longitude': dataLongitude[i] }
+        tempDict = { 'price':float(dataPrice[i]), 'rating': float(dataRating[i]), 'availability': dataAvail[i], 'bathrooms' : dataBathRooms[i], 'bedrooms': dataBedRooms[i], 'borough': dataBorough[i], 'locality': dataLocality[i], 'latitude': dataLatitude[i], 'longitude': dataLongitude[i], 'accommodates': int(dataAccommodates[i]) }
         lineData.append(tempDict)
     print(len(lineData))
     

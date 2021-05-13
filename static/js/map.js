@@ -239,6 +239,11 @@ function drawNYCMap(serverdata){
       // Highlight hovered province
       //d3.select(this).style('fill', 'orange');
       //console.log(data)
+      d3.selectAll(".Country")
+      .transition()
+      .duration(200)
+      .style("opacity", .5)
+
       d3.select(this)
       .transition()
       .duration(200)
@@ -248,7 +253,7 @@ function drawNYCMap(serverdata){
 
       // console.log(d.properties.BoroName)
       // Draw effects
-      textArt(nameFn(d));
+      //textArt(nameFn(d));
       tooltip.classed("hidden", false)
       .style("top", (d3.event.pageY) + "px")
       .style("left", (d3.event.pageX + 10) + "px")
@@ -271,9 +276,9 @@ function drawNYCMap(serverdata){
       .duration(200)
       .style("stroke", "transparent")
       // Remove effect text
-      effectLayer.selectAll('text').transition()
-        .style('opacity', 0)
-        .remove();
+      // effectLayer.selectAll('text').transition()
+      //   .style('opacity', 0)
+      //   .remove();
     
 
         var tooltip = d3.select("div.tooltip");
@@ -402,7 +407,6 @@ function drawNYCMap(serverdata){
         var data = d3.map();
         var colorScale = d3.scaleThreshold()
                           //.domain([0,100,200,300,400,500,600,700,1000])
-                          // .domain(domainList)
                           .domain(unique)
                           .range(d3.schemeBlues[7]);
         d3.queue()
@@ -465,6 +469,7 @@ function drawNYCMap(serverdata){
               .enter().append('path')
               .attr('d', path)
               .attr('vector-effect', 'non-scaling-stroke')
+              .attr('class', function(d){return 'Country'})
               .attr('fill', function(d){
                 // /console.log("data is", serverdata);'
                 //console.log(d)
